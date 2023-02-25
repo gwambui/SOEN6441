@@ -1,9 +1,8 @@
 package model;
 
 public interface Property {
-    String postalCode = null;
 
-
+    String address = null;
 
 
 }
