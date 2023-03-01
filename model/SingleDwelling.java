@@ -1,7 +1,10 @@
 package model;
 
 public abstract class SingleDwelling implements Property{
-    long id;
+    int id;
+    String type;
+    int buildingId;
+    boolean available;
     String sreet;
     String city;
     String postalCode;
@@ -10,14 +13,50 @@ public abstract class SingleDwelling implements Property{
     int bathrooms;
 
 
-    public SingleDwelling(long id, String sreet, String city, String postalCode, int streetNumber, int bedrooms, int bathrooms) {
-        this.id = id;
+    public SingleDwelling (String type, int Id, int buildingId, boolean av, String sreet, String city,
+                          String postalCode, int streetNumber, int bedrooms, int bathrooms )
+    {   this.type = type;
+        this.id = Id;
+        this.buildingId = buildingId;
+        this.available = av;
         this.sreet = sreet;
         this.city = city;
         this.postalCode = postalCode;
         this.streetNumber = streetNumber;
         this.bedrooms = bedrooms;
         this.bathrooms = bathrooms;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(int buildingId) {
+        this.buildingId = buildingId;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     public SingleDwelling() {
