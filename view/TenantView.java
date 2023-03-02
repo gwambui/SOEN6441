@@ -1,6 +1,6 @@
 package view;
 
-<<<<<<< HEAD
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,7 +9,6 @@ import model.Tenant;
 import model.Lease;
 
 public class TenantView extends Tenant {
-
 
 
     public void TenantInput() {
@@ -34,7 +33,7 @@ public class TenantView extends Tenant {
         tenant.setEmail(sc.next());
         email = tenant.getEmail();
 
-        if(isCurrentTenant == false) {
+        if (isCurrentTenant == false) {
             System.out.println("Input the apartment building name the potential tenant is interested in: ");
             buildingName = sc.next();
 
@@ -44,9 +43,7 @@ public class TenantView extends Tenant {
             tenant.setID();
             tenantID = tenant.getTenantID();
             System.out.println("This tenants ID is: " + tenant.getTenantID());
-        }
-
-        else if (isCurrentTenant == true) {
+        } else if (isCurrentTenant == true) {
             System.out.println("Input the apartment building name the tenant is living in: ");
             buildingName = sc.next();
 
@@ -64,5 +61,6 @@ public class TenantView extends Tenant {
         TenantController tc = new TenantController();
         tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingName, apartmentNum);
     }
+}
 
 

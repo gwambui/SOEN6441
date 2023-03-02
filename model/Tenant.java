@@ -36,38 +36,45 @@ public class Tenant {
     public String getFirstName() {
         return firstName;
     }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
     public String getLastName() {
         return lastName;
     }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
     public int getApartmentNum() {
         return apartmentNum;
     }
+
     public void setApartmentNum(int apartmentNum) {
         this.apartmentNum = apartmentNum;
     }
+
     public String getBuildingName() {
         return buildingName;
     }
+
     public boolean setCurrentTenant(String choice) {
 
         if (choice.equals("yes")) {
             isCurrentTenant = true;
-        }
-
-        else if (choice.equals("no")) {
-          isCurrentTenant = false;
+        } else if (choice.equals("no")) {
+            isCurrentTenant = false;
         }
         return isCurrentTenant;
     }
@@ -81,8 +88,9 @@ public class Tenant {
         tenantID = (250000 + r.nextInt(1000));
         return tenantID;
     }
+
     public int getTenantID() {
         return tenantID;
     }
 
-
+}

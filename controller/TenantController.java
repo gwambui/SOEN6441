@@ -1,6 +1,6 @@
 package controller;
 
-<<<<<<< HEAD
+
 import model.ExistingTenant;
 import model.Lease;
 import model.PotentialTenant;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class TenantController extends Tenant {
     public static ArrayList<Tenant> tenants = new ArrayList<Tenant>();
+
     public void TenantController() {
 
         Tenant tenant = new Tenant();
@@ -25,7 +26,8 @@ public class TenantController extends Tenant {
         LeaseView lv = new LeaseView();
         Scanner sc = new Scanner(System.in);
 
-}
+    }
+
     public void addNewTenant(boolean isCurrent, int tenantID, String firstName, String lastName, String email, String buildingName, int apartmentNum) {
         Tenant t = new Tenant();
 
@@ -44,9 +46,7 @@ public class TenantController extends Tenant {
     public void DisplayCurrentTenants(ArrayList<Tenant> tenantList) {
         if (tenantList.isEmpty()) {
             System.out.println("There are no tenants inputted in the system");
-        }
-
-        else {
+        } else {
             System.out.println("The following is a list of Current Tenants: \n");
             for (Tenant tenant : tenantList) {
                 if (tenant.isCurrentTenant == true) {
@@ -63,9 +63,7 @@ public class TenantController extends Tenant {
     public void DisplayPotentialTenants(ArrayList<Tenant> tenantList) {
         if (tenantList.isEmpty()) {
             System.out.println("There are no tenants inputted in the system");
-        }
-
-        else {
+        } else {
             System.out.println("The following is a list of Potential Tenants: \n");
             for (Tenant tenant : tenantList) {
                 if (tenant.isCurrentTenant == false) {
@@ -77,3 +75,4 @@ public class TenantController extends Tenant {
             }
         }
     }
+}

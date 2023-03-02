@@ -1,8 +1,6 @@
 package view;
 
-import controller.PropertyController;
-import model.House;
-import model.Property;
+
 import model.Lease;
 import model.Tenant;
 import model.ExistingTenant;
@@ -14,7 +12,6 @@ import java.util.Scanner;
 import static controller.LeaseController.leases;
 import static controller.TenantController.tenants;
 
-import controller.PropertyController;
 import controller.TenantController;
 
 
@@ -34,6 +31,7 @@ public class Main {
 
         LeaseView lv = new LeaseView();
 
+        System.out.println("Hello World!");
         while (true) {
             Scanner sc = new Scanner(System.in);
             int userChoice = 0;
