@@ -35,12 +35,11 @@ public class Main {
             Scanner sc = new Scanner(System.in);
             int userChoice = 0;
 
-            System.out.println("1. Sign into Administrator");
-            System.out.println("2. Sign into Tenant");
+            System.out.println("1. Sign in as Administrator");
+            System.out.println("2. Sign in as Tenant");
             userChoice = sc.nextInt();
 
             if (userChoice == 1) {
-
 
                 System.out.println("1. Add a Property \n");
                 System.out.println("2. Add a Tenant \n");
@@ -78,7 +77,5 @@ public class Main {
 
 
     }
-
-
 
 }
