@@ -7,6 +7,8 @@ import model.PotentialTenant;
 import model.Tenant;
 import view.LeaseView;
 import view.TenantView;
+
+import java.util.Objects;
 import java.util.Scanner;
 
 import java.util.ArrayList;
@@ -75,4 +77,20 @@ public class TenantController extends Tenant {
             }
         }
     }
+
+    public boolean checkTenantID(ArrayList<Tenant> tenantList, int inputtedID) {
+       boolean out = false;
+
+        for (Tenant tenant : tenantList) {
+            if (Objects.equals(tenant.tenantID, inputtedID)) {
+                out = true;
+            }
+            else {
+                out = false;
+            }
+        }
+        return out;
+    }
+
+
 }

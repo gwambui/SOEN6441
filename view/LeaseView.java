@@ -32,7 +32,7 @@ public class LeaseView extends Lease {
 
         LeaseController lc = new LeaseController();
 
-        lc.addNewLease(leaseID, leaseStartDate, leaseEndDate, monthlyRentAmount);
+        lc.addNewLease(leaseID, leaseStartDate, leaseEndDate, monthlyRentAmount, false);
 
     }
 }
