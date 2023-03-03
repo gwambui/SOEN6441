@@ -82,8 +82,9 @@ public class TenantController extends Tenant {
        boolean out = false;
 
         for (Tenant tenant : tenantList) {
-            if (Objects.equals(tenant.tenantID, inputtedID)) {
+            if (Objects.equals(tenant.tenantID, inputtedID) && tenant.isCurrentTenant) {
                 out = true;
+                break;
             }
             else {
                 out = false;
@@ -91,6 +92,7 @@ public class TenantController extends Tenant {
         }
         return out;
     }
+
 
 
 }

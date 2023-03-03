@@ -27,31 +27,46 @@ public class LeaseController {
         else {
             System.out.println("The following is a list of all leases in the system: \n");
 
-            for (int i = 0; i < leaseList.size() && i < tenantList.size(); i++) {
-                Lease l1 = leaseList.get(i);
-                Tenant t1 = tenantList.get(i);
+                for (int i = 0, j=0; i < leaseList.size() && j < tenantList.size();) {
 
-                System.out.println("The lease ID is: " + l1.getLeaseID());
-                System.out.println("The associated tenant ID with this lease is: " + t1.getTenantID());
-                System.out.println("The lease start date is: " + l1.getLeaseStartDate());
-                System.out.println("The lease end date is: " + l1.getLeaseEndDate());
-                System.out.println("The monthly rent for this lease: $" + l1.getMonthlyRentAmount() );
-                System.out.println("The monthly rent has been paid for this lease (true/false): " + l1.getHasPaidRent() + "\n");
+                    Lease l1 = leaseList.get(i);
+                    Tenant t1 = tenantList.get(j);
+
+                    if (t1.isCurrentTenant == false) {
+                        j++;
+                        continue;
+                    }
+
+                    System.out.println("The lease ID is: " + l1.getLeaseID());
+                    System.out.println("The associated tenant ID with this lease is: " + t1.getTenantID());
+                    System.out.println("The lease start date is: " + l1.getLeaseStartDate());
+                    System.out.println("The lease end date is: " + l1.getLeaseEndDate());
+                    System.out.println("The monthly rent for this lease: $" + l1.getMonthlyRentAmount());
+                    System.out.println("The monthly rent has been paid for this lease (true/false): " + l1.getHasPaidRent() + "\n");
+                    j++;
+                    i++;
+                }
             }
-        }
     }
 
     public Double getRentAmount(ArrayList<Lease> leaseList, ArrayList<Tenant> tenantList, int tenantID) {
             Double out = 0.0;
 
-            for (int i = 0; i < leaseList.size() && i < tenantList.size(); i++) {
+            for (int i = 0, j=0; i < leaseList.size() && j < tenantList.size();) {
 
                 Lease l1 = leaseList.get(i);
-                Tenant t1 = tenantList.get(i);
+                Tenant t1 = tenantList.get(j);
+
+                if (t1.isCurrentTenant == false) {
+                    j++;
+                    continue;
+                }
 
                 if (Objects.equals(t1.getTenantID(), tenantID)) {
                     out = l1.getMonthlyRentAmount();
             }
+                j++;
+                i++;
         }
 
         return out;
@@ -68,16 +83,47 @@ public class LeaseController {
         else {
             out = true;
 
-            for (int i = 0; i < leaseList.size() && i < tenantList.size(); i++) {
+            for (int i = 0, j = 0; i < leaseList.size() && j < tenantList.size();) {
 
                 Lease l1 = leaseList.get(i);
-                Tenant t1 = tenantList.get(i);
+                Tenant t1 = tenantList.get(j);
 
                 if (Objects.equals(t1.getTenantID(), tenantID)) {
                     l1.setHasPaidRent(true);
                 }
+
+                if (t1.isCurrentTenant == false) {
+                    j++;
+                    continue;
+                }
+
+                j++;
+                i++;
             }
 
+        }
+
+        return out;
+    }
+
+    public boolean checkIfPaid(ArrayList<Lease> leaseList, ArrayList<Tenant> tenantList, int tenantID) {
+        boolean out = false;
+
+        for (int i = 0, j=0; i < leaseList.size() && j < tenantList.size();) {
+
+            Lease l1 = leaseList.get(i);
+            Tenant t1 = tenantList.get(j);
+
+            if (t1.isCurrentTenant == false) {
+                j++;
+                continue;
+            }
+
+            if (l1.hasPaidRent == true && Objects.equals(t1.tenantID, tenantID))  {
+                out = true;
+            }
+            j++;
+            i++;
         }
 
         return out;

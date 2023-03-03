@@ -23,8 +23,17 @@ public class PayRentView {
         boolean result;
 
         while (true) {
-            System.out.println("Please input your tenant ID: ");
+            System.out.println("Please input your tenant ID or type 2 to go back to main menu: ");
             inputtedID = sc.nextInt();
+
+            if (inputtedID == 2) {
+                break;
+            }
+
+            if (lc.checkIfPaid(leases, tenants, inputtedID)) {
+                System.out.println("Your rent has already been paid");
+                break;
+            }
 
             if (tc.checkTenantID(tenants, inputtedID)) {
                 rentAmount = lc.getRentAmount(leases, tenants, inputtedID);
@@ -41,6 +50,11 @@ public class PayRentView {
                     } else {
                         System.out.println("The amount you inputted does not match your monthly rent amount, please try again later");
                     }
+            }
+
+            else {
+                System.out.println("Error: this tenant ID is invalid or is associated with a potential tenant with no lease");
+                continue;
             }
 
 
