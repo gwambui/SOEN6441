@@ -30,8 +30,7 @@ public class Main {
         PotentialTenant pt = new PotentialTenant();
 
         LeaseView lv = new LeaseView();
-
-        System.out.println("Hello World!");
+        System.out.println("Hello World is");
         while (true) {
             Scanner sc = new Scanner(System.in);
             int userChoice = 0;
