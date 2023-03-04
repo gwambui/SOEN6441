@@ -1,0 +1,4 @@
+true,250101,William,Alves,will19981@live.ca,206,Tower1,
+false,250102,Michael,Nascimento,mike_nash@gmail.com,910,Tower2,
+true,250103,Danielle,Cormier,dc_corms@live.ca,210,Tower1,
+false,250103,Anthony,Farthing,AJPF@hello.ca,905,Tower2

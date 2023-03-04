@@ -52,6 +52,7 @@ public class Main {
                 System.out.println("9. Display all leases \n");
                 System.out.println("10. Go back \n");
                 System.out.println("11. Exit \n");
+                System.out.println("12. Add Tenants and Leases from txt file");
 
                 userChoice = sc.nextInt();
 
@@ -69,7 +70,12 @@ public class Main {
                 else if (userChoice == 11) {
                     break;
                 }
+                else if (userChoice == 12) {
+                    tv.addHistoricalTenant();
+                    lv.addHistoricalLease();
+                }
             }
+
             else if (userChoice == 2) {
                 prv.PayRentView();
             }
