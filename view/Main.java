@@ -1,8 +1,6 @@
 package view;
 
-import controller.PropertyController;
-import model.House;
-import model.Property;
+
 import model.Lease;
 import model.Tenant;
 import model.ExistingTenant;
@@ -14,7 +12,6 @@ import java.util.Scanner;
 import static controller.LeaseController.leases;
 import static controller.TenantController.tenants;
 
-import controller.PropertyController;
 import controller.TenantController;
 
 
@@ -31,48 +28,60 @@ public class Main {
         LeaseController lc = new LeaseController();
         ExistingTenant et = new ExistingTenant();
         PotentialTenant pt = new PotentialTenant();
+        PayRentView prv = new PayRentView();
 
         LeaseView lv = new LeaseView();
-
         while (true) {
             Scanner sc = new Scanner(System.in);
             int userChoice = 0;
 
-            System.out.println("1. Add a Property \n" );
-            System.out.println("2. Add a Tenant \n");
-            System.out.println("3. Rent a Unit \n");
-            System.out.println("4. Display Properties \n");
-            System.out.println("5. Display Current Tenants \n");
-            System.out.println("6. Display Potential Tenants \n");
-            System.out.println("7. Display Rented Units \n");
-            System.out.println("8. Display Vacant Units \n");
-            System.out.println("9. Display all leases \n");
-            System.out.println("10. Exit \n");
-
+            System.out.println("1. Sign in as Administrator");
+            System.out.println("2. Sign in as Tenant");
             userChoice = sc.nextInt();
 
-            if (userChoice == 2) {
-                tv.TenantInput();
+            if (userChoice == 1) {
+
+                System.out.println("1. Add a Property \n");
+                System.out.println("2. Add a Tenant \n");
+                System.out.println("3. Rent a Unit \n");
+                System.out.println("4. Display Properties \n");
+                System.out.println("5. Display Current Tenants \n");
+                System.out.println("6. Display Potential Tenants \n");
+                System.out.println("7. Display Rented Units \n");
+                System.out.println("8. Display Vacant Units \n");
+                System.out.println("9. Display all leases \n");
+                System.out.println("10. Go back \n");
+                System.out.println("11. Exit \n");
+                System.out.println("12. Add Tenants and Leases from txt file");
+
+                userChoice = sc.nextInt();
+
+                if (userChoice == 2) {
+                    tv.TenantInput();
+                } else if (userChoice == 5) {
+                    tc.DisplayCurrentTenants(tenants);
+                } else if (userChoice == 6) {
+                    tc.DisplayPotentialTenants(tenants);
+                } else if (userChoice == 9) {
+                    lc.DisplayLeases(leases, tenants);
+                } else if (userChoice == 10) {
+                    continue;
+                }
+                else if (userChoice == 11) {
+                    break;
+                }
+                else if (userChoice == 12) {
+                    tv.addHistoricalTenant();
+                    lv.addHistoricalLease();
+                }
             }
 
-            else if (userChoice == 5) {
-                tc.DisplayCurrentTenants(tenants);
-            }
-
-            else if (userChoice == 6) {
-                tc.DisplayPotentialTenants(tenants);
-            }
-
-            else if (userChoice == 9) {
-                lc.DisplayLeases(leases, tenants);
-            }
-
-            else if (userChoice == 10) {
-                break;
+            else if (userChoice == 2) {
+                prv.PayRentView();
             }
         }
+
+
     }
-
-
 
 }

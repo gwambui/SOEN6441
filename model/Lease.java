@@ -9,6 +9,8 @@ public class Lease extends Tenant {
     public Double monthlyRentAmount;
     public int leaseID;
 
+    public boolean hasPaidRent;
+
     public String getLeaseStartDate() {
         return leaseStartDate;
     }
@@ -51,6 +53,14 @@ public class Lease extends Tenant {
         Random r = new Random();
         leaseID = (100000 + r.nextInt(1000));
         return leaseID;
+    }
+
+    public boolean getHasPaidRent() {
+        return hasPaidRent;
+    }
+
+    public void setHasPaidRent(boolean hasPaidRent) {
+        this.hasPaidRent = hasPaidRent;
     }
 
 }

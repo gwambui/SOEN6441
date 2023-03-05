@@ -2,6 +2,8 @@ package view;
 import model.Lease;
 import controller.LeaseController;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -32,8 +34,32 @@ public class LeaseView extends Lease {
 
         LeaseController lc = new LeaseController();
 
-        lc.addNewLease(leaseID, leaseStartDate, leaseEndDate, monthlyRentAmount);
+        lc.addNewLease(leaseID, leaseStartDate, leaseEndDate, monthlyRentAmount, false);
 
+    }
+
+    public void addHistoricalLease() {
+        Scanner read = null;
+        try{
+            read = new Scanner(new File("Data\\Leases.txt"));
+            read.useDelimiter(",");
+
+            while (read.hasNext()) {
+                leaseID = Integer.parseInt(read.next());
+                leaseStartDate = read.next();
+                leaseEndDate = read.next();
+                monthlyRentAmount = Double.valueOf(read.next());
+                hasPaidRent = read.nextBoolean();
+
+                LeaseController lc = new LeaseController();
+
+                lc.addNewLease(leaseID, leaseStartDate, leaseEndDate, monthlyRentAmount, false);
+            }
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        read.close();
     }
 }
 
