@@ -2,24 +2,43 @@ package model;
 
 public abstract class SingleDwelling implements Property{
     int id;
+
+    @Override
+    public String toString() {
+        return "SingleDwelling{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", buildingId=" + buildingId +
+                ", available=" + available +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", streetNumber=" + streetNumber +
+                ", bedrooms=" + bedrooms +
+                ", bathrooms=" + bathrooms +
+                ", buildingName='" + buildingName + '\'' +
+                '}';
+    }
+
     String type;
     int buildingId;
     boolean available;
-    String sreet;
+    String street;
     String city;
     String postalCode;
     int streetNumber;
     int bedrooms;
     int bathrooms;
+    String buildingName;
 
 
-    public SingleDwelling (String type, int Id, int buildingId, boolean av, String sreet, String city,
-                          String postalCode, int streetNumber, int bedrooms, int bathrooms )
+    public SingleDwelling (String type, int Id, int buildingId, boolean av, String street, String city,
+                          String postalCode, int streetNumber, int bedrooms, int bathrooms)
     {   this.type = type;
         this.id = Id;
         this.buildingId = buildingId;
         this.available = av;
-        this.sreet = sreet;
+        this.street = street;
         this.city = city;
         this.postalCode = postalCode;
         this.streetNumber = streetNumber;
@@ -33,6 +52,23 @@ public abstract class SingleDwelling implements Property{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    @Override
+    public String getBuildingName() {
+        return buildingName;
+    }
+
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
     }
 
     public String getType() {
@@ -63,6 +99,7 @@ public abstract class SingleDwelling implements Property{
 
     }
 
+
     public String getPostalCode() {
         return postalCode;
     }
@@ -80,11 +117,11 @@ public abstract class SingleDwelling implements Property{
     }
 
     public String getSreet() {
-        return sreet;
+        return street;
     }
 
-    public void setSreet(String sreet) {
-        this.sreet = sreet;
+    public void setSreet(String street) {
+        this.street = street;
     }
 
     public int getStreetNumber() {

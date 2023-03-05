@@ -42,7 +42,7 @@ public class SingleDwellingServiceTest {
     private SingleDwelling createTestHouse() {
         SingleDwelling sd = new House();
         sd.setStreetNumber(1001);
-        sd.setSreet("St Catherine E");
+        sd.setStreet("St Catherine E");
         sd.setCity("Montreal");
         sd.setBathrooms(2);
         sd.setBedrooms(3);
@@ -55,7 +55,7 @@ public class SingleDwellingServiceTest {
         SingleDwellingService singleDwellingService = new SingleDwellingService(singleDwellingDaoDao);
         Mockito.when(singleDwellingDaoDao.findById(1L)).thenReturn(createTestCondo());
         SingleDwelling actual = singleDwellingService.findById(1L);
-        Assert.assertEquals("St Catherine E", actual.getSreet());
+        Assert.assertEquals("St Catherine E", actual.getStreet());
         Assert.assertEquals("Montreal", actual.getCity());
         Assert.assertEquals("H3H 1B4", actual.getPostalCode());
         Mockito.verify(singleDwellingDaoDao).findById(1L);
@@ -63,7 +63,7 @@ public class SingleDwellingServiceTest {
     private SingleDwelling createTestCondo() {
         SingleDwelling sd = new Apartment();
         sd.setStreetNumber(1001);
-        sd.setSreet("St Catherine E");
+        sd.setStreet("St Catherine E");
         sd.setCity("Montreal");
         sd.setBathrooms(2);
         sd.setBedrooms(3);
@@ -76,7 +76,7 @@ public class SingleDwellingServiceTest {
         SingleDwellingService singleDwellingService = new SingleDwellingService(singleDwellingDaoDao);
         Mockito.when(singleDwellingDaoDao.findById(1L)).thenReturn(createTestApt());
         SingleDwelling actual = singleDwellingService.findById(1L);
-        Assert.assertEquals("St Catherine E", actual.getSreet());
+        Assert.assertEquals("St Catherine E", actual.getStreet());
         Assert.assertEquals("Montreal", actual.getCity());
         Assert.assertEquals("H3H 1B4", actual.getPostalCode());
         Mockito.verify(singleDwellingDaoDao).findById(1L);
@@ -84,7 +84,7 @@ public class SingleDwellingServiceTest {
     private SingleDwelling createTestApt() {
         SingleDwelling sd = new Condo();
         sd.setStreetNumber(1001);
-        sd.setSreet("St Catherine E");
+        sd.setStreet("St Catherine E");
         sd.setCity("Montreal");
         sd.setBathrooms(2);
         sd.setBedrooms(3);

@@ -1,18 +1,36 @@
 package model;
 
 public class Apartment extends SingleDwelling{
-    int sqfootage;
-    int AptNumber;
-    String building;
 
-    public Apartment(String type, int id, int buildingId, boolean av, String sreet, String city,
+    int aptNumber;
+
+
+    public Apartment(String type, int id, int buildingId, boolean av, String street, String city,
                      String postalCode, int streetNumber, int bedrooms, int bathrooms , int unitNumber)
     {
-        super(type, id, buildingId, av, sreet, city, postalCode, streetNumber, bedrooms, bathrooms);
+        super(type, id, buildingId, av, street, city, postalCode, streetNumber, bedrooms, bathrooms);
 
-        this.UnitNumber = unitNumber;
+        this.aptNumber = unitNumber;
     }
+
+    public String toString() {
+        return super.toString()+ " Apartment{" +
+                "aptNumber=" + aptNumber +
+                '}';
+    }
+
     public Apartment() {
 
     }
+
+    @Override
+    public String getBuildingName() {
+        return null;
+    }
+
+    @Override
+    public String getStreet() {
+        return street;
+    }
+
 }

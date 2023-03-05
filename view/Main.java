@@ -24,108 +24,118 @@ package view;
 import controller.PropertyController;
 import controller.TenantController;
 
+import model.Lease;
+import model.Tenant;
+import model.ExistingTenant;
+import model.PotentialTenant;
+import controller.TenantController;
+import controller.LeaseController;
 
-public class MainDriver {
+import static controller.LeaseController.leases;
+import static controller.TenantController.tenants;
+
+import controller.TenantController;
+import java.util.Scanner;
+
+
+public class Main {
 
     public static void main(String[] args) {
+        Lease lease = new Lease();
+
+        // Create tenant objects
+        Tenant tenant = new Tenant();
+        TenantView tv = new TenantView();
+        TenantController tc = new TenantController();
+        LeaseController lc = new LeaseController();
+        ExistingTenant et = new ExistingTenant();
+        PotentialTenant pt = new PotentialTenant();
+        PayRentView prv = new PayRentView();
+
+        LeaseView lv = new LeaseView();
+
+
         System.out.println("Hello and welcome. Please select an action!");
         //    create property MVC
-        PropertyView pv = new PropertyView()
+        PropertyView pv = new PropertyView();
+//        PropertyController pc = new PropertyController(pv);
         Scanner sc = new Scanner(System.in);
+        int choice = 0;
+        int userChoice = 0;
+        System.out.println("1. Sign in as Administrator");
+        System.out.println("2. Sign in as Tenant");
+        userChoice = sc.nextInt();
         do {
-            printMenu();
-            choice = sc.nextInt();
 
-            switch(choice) {
-                case 1 :
-                    pv.addProperty();
-                    break;
-                case 2 :
-                    choice2();
-                    break;
-                case 3 :
-                    choice3();
-                    break;
-                case 4 :
-                    choice4();
-                    break;
-                case 5 :
-                    choice5();
-                    break;
-                case 6 :
-                    choice6();
-                    break;
-                case 7:
-                    choice7();
-                    break;
-                case 8 :
-                    choice8();
-                    break;
-                case 9 :
-                    choice9();
-                    break;
-                   default:
-                    System.out.println("Wrong input");
+            if (userChoice == 1) {
+                printMenu();
+                choice = sc.nextInt();
+
+                switch (choice) {
+                    case 1:
+                        pv.addProperty();
+                        break;
+                    case 2:
+                        tv.TenantInput();
+                        break;
+                    case 3:
+                        tc.rentUnit();
+                        break;
+                    case 4:
+                        pv.displayProperties();
+                        break;
+                    case 5:
+                        tc.DisplayCurrentTenants(tenants);
+                        break;
+                    case 6:
+                        tc.DisplayPotentialTenants(tenants);
+                        break;
+                    case 7:
+                        pv.displayRentedUnits();
+                        break;
+                    case 8:
+                        pv.displayVacantUnits();
+                        break;
+                    case 9:
+                        lc.DisplayLeases(leases, tenants);
+                        break;
+                    case 10:
+                        pv.addHistoricalProperty();
+                        break;
+                    case 11:
+                        closeProg();
+                        break;
+                    default:
+                        System.out.println("Wrong input");
+                }
             }
-        }while(choice !=9);
+            else if(userChoice == 2){
+                prv.PayRentView();
+            }
+        } while (choice != 11);
 
     }
+
+    private static void closeProg() {
+        System.out.println("Thank you! BYE");
+        System.exit(0);
+    }
+
+
     public static void printMenu() {
         System.out.println("what do you want to do?");
-        System.out.println("1. Add a property)");
+        System.out.println("1. Add a property");
         System.out.println("2. Add a tenant");
         System.out.println("3. Rent a unit");
         System.out.println("4. Display properties ");
         System.out.println("5. Display tenants");
-        System.out.println("6. Display rented units");
-        System.out.println("7. Display vacant units");
-        System.out.println("8. Display all leases");
-        System.out.println("9. Exit");
+        System.out.println("6. Display Potential Tenants");
+        System.out.println("7. Display rented units");
+        System.out.println("8. Display vacant units");
+        System.out.println("9. Display all leases");
+        System.out.println("10. Load historical property from list");
+        System.out.println("11. Exit");
         System.out.println("Please enter your choice");
-
-        public static void choice1() {
-
-        }
-
-
-
-
-
-
-
     }
-
-
-
-//        Property house1 = new House();
-        PropertyView propertyView = new PropertyView();
-        PropertyController pc = new PropertyController(propertyView);
-        /*
-        get info from user for type of property to add.
-        case house,apartment,condo, condoBuilding,aptBuilding
-        //HOUSE
-        long id;
-        String sreet;
-        String city;
-        String postalCode;
-        int streetNumber;
-        int bedrooms;
-        int bathrooms;
-         */
-        switch ("prop".toLowerCase()){
-            case "house":
-
-                pc.addNewHouse(123,"street","city", "pCode", 12,2,2);
-
-        }
-//        create tenant mvc
-        TenantView tv = new TenantView();
-        TenantController tc = new TenantController(tv);
-        tc.addNewTenant("name","email",1234,5678);
-    }
-
-
-
-
 
 }
