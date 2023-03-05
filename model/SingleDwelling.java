@@ -1,18 +1,44 @@
 package model;
 
 public abstract class SingleDwelling implements Property{
-    long id;
-    String sreet;
+    int id;
+
+    @Override
+    public String toString() {
+        return "SingleDwelling{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", buildingId=" + buildingId +
+                ", available=" + available +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", streetNumber=" + streetNumber +
+                ", bedrooms=" + bedrooms +
+                ", bathrooms=" + bathrooms +
+                ", buildingName='" + buildingName + '\'' +
+                '}';
+    }
+
+    String type;
+    int buildingId;
+    boolean available;
+    String street;
     String city;
     String postalCode;
     int streetNumber;
     int bedrooms;
     int bathrooms;
+    String buildingName;
 
 
-    public SingleDwelling(long id, String sreet, String city, String postalCode, int streetNumber, int bedrooms, int bathrooms) {
-        this.id = id;
-        this.sreet = sreet;
+    public SingleDwelling (String type, int Id, int buildingId, boolean av, String street, String city,
+                          String postalCode, int streetNumber, int bedrooms, int bathrooms)
+    {   this.type = type;
+        this.id = Id;
+        this.buildingId = buildingId;
+        this.available = av;
+        this.street = street;
         this.city = city;
         this.postalCode = postalCode;
         this.streetNumber = streetNumber;
@@ -20,9 +46,59 @@ public abstract class SingleDwelling implements Property{
         this.bathrooms = bathrooms;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    @Override
+    public String getBuildingName() {
+        return buildingName;
+    }
+
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(int buildingId) {
+        this.buildingId = buildingId;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     public SingleDwelling() {
 
     }
+
 
     public String getPostalCode() {
         return postalCode;
@@ -41,11 +117,11 @@ public abstract class SingleDwelling implements Property{
     }
 
     public String getSreet() {
-        return sreet;
+        return street;
     }
 
-    public void setSreet(String sreet) {
-        this.sreet = sreet;
+    public void setSreet(String street) {
+        this.street = street;
     }
 
     public int getStreetNumber() {

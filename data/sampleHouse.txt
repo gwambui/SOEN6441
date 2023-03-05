@@ -1,0 +1,6 @@
+house,7873,Earnhardt Drive ,Toronto,T2P 1M6,3,2,Canada,
+house,9259,Hillside Street ,Toronto,V0L 1B0,2,2,Canada,
+house,7801,Rainy Day Drive,Vancouver,V0N 2M1,4,3,Canada,
+house,6157,Eden Drive ,Veteran,V6C 1B4,5,3,Canada,
+house,4444,Sherman Street,Victoriaville,Y0B 1C0,2,1,Canada,
+house,8388,Clover Ave,Carmacks,S0N 1F0,3,2,Canada

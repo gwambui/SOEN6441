@@ -1,20 +1,52 @@
 package model;
+import java.util.ArrayList;
+import java.util.Random;
+
+import controller.TenantController;
+import view.TenantView;
 
 public class Tenant {
-    String name;
-    String email;
-    long leaseId;
-    long propId;
+    public static ArrayList tenantAttributes = new ArrayList();
+    public String firstName;
+    public String lastName;
+    public String email;
+    public int apartmentNum;
+    public int tenantID;
 
-    public Tenant(String name, String email, int i, int i1) {
+    @Override
+    public String toString() {
+        return "Tenant{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", apartmentNum=" + apartmentNum +
+                ", tenantID=" + tenantID +
+                ", buildingName='" + buildingName + '\'' +
+                ", isCurrentTenant=" + isCurrentTenant +
+                '}';
     }
 
-    public String getName() {
-        return name;
+    public String buildingName;
+    public boolean isCurrentTenant;
+
+    public Tenant() {
+
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -25,19 +57,40 @@ public class Tenant {
         this.email = email;
     }
 
-    public long getLeaseId() {
-        return leaseId;
+    public int getApartmentNum() {
+        return apartmentNum;
     }
 
-    public void setLeaseId(long leaseId) {
-        this.leaseId = leaseId;
+    public void setApartmentNum(int apartmentNum) {
+        this.apartmentNum = apartmentNum;
     }
 
-    public long getPropId() {
-        return propId;
+    public String getBuildingName() {
+        return buildingName;
     }
 
-    public void setPropId(long propId) {
-        this.propId = propId;
+    public boolean setCurrentTenant(String choice) {
+
+        if (choice.equals("yes")) {
+            isCurrentTenant = true;
+        } else if (choice.equals("no")) {
+            isCurrentTenant = false;
+        }
+        return isCurrentTenant;
     }
+
+    public boolean getCurrentTenant() {
+        return isCurrentTenant;
+    }
+
+    public int setID() {
+        Random r = new Random();
+        tenantID = (250000 + r.nextInt(1000));
+        return tenantID;
+    }
+
+    public int getTenantID() {
+        return tenantID;
+    }
+
 }

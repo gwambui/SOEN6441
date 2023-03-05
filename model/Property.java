@@ -2,7 +2,18 @@ package model;
 
 public interface Property {
 
-    String address = null;
+    String getType();
 
+    String getBuildingName();
 
+    int getId();
+
+    String getStreet();
+
+    String getCity();
+
+    String getPostalCode();
+
+    int getStreetNumber();
+    boolean isAvailable();
 }
