@@ -4,6 +4,7 @@ package view;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import controller.PropertyController;
 import controller.TenantController;
 import model.Tenant;
 import model.Lease;
@@ -15,6 +16,7 @@ public class TenantView extends Tenant {
         Tenant tenant = new Tenant();
         Lease lease = new Lease();
         LeaseView lv = new LeaseView();
+        PropertyController pc;
 
         Scanner sc = new Scanner(System.in);
 
@@ -34,8 +36,8 @@ public class TenantView extends Tenant {
         email = tenant.getEmail();
 
         if (isCurrentTenant == false) {
-            System.out.println("Input the apartment building name the potential tenant is interested in: ");
-            buildingName = sc.next();
+            System.out.println("Input the apartment building ID the potential tenant is interested in: ");
+            buildingTenantID = sc.nextInt();
 
             System.out.println("Input apartment number potential tenant is interested in:");
             apartmentNum = sc.nextInt();
@@ -43,9 +45,10 @@ public class TenantView extends Tenant {
             tenant.setID();
             tenantID = tenant.getTenantID();
             System.out.println("This tenants ID is: " + tenant.getTenantID());
+
         } else if (isCurrentTenant == true) {
-            System.out.println("Input the apartment building name the tenant is living in: ");
-            buildingName = sc.next();
+            System.out.println("Input the apartment building ID the tenant is living in: ");
+            buildingTenantID = sc.nextInt();
 
             System.out.println("Input apartment number tenant is renting:");
             apartmentNum = sc.nextInt();
@@ -54,12 +57,16 @@ public class TenantView extends Tenant {
             tenantID = tenant.getTenantID();
             System.out.println("This tenants ID is: " + tenant.getTenantID());
 
+            PropertyView pv = new PropertyView();
+            pv.changeAvailableFlag(buildingTenantID,apartmentNum);
+
             lv.LeaseInput();
+
 
         }
 
         TenantController tc = new TenantController();
-        tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingName, apartmentNum);
+        tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingTenantID, apartmentNum);
     }
 }
 

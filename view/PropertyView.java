@@ -1,6 +1,7 @@
 package view;
 
 import controller.PropertyController;
+import model.Apartment;
 import model.Property;
 import model.SingleDwelling;
 
@@ -252,4 +253,21 @@ public class PropertyView {
             }
         }
     }
+
+    public void changeAvailableFlag(int buildingID, int apartmentNum) {
+
+        for (Property p : pc.getProperties()) {
+            if (!(p.getType().equalsIgnoreCase("condoBuilding")) &&
+                    !(p.getType().equalsIgnoreCase("aptBuilding")) &&
+                    (p.getBuildingId() == buildingID)) {
+                Apartment s = (Apartment) p;
+                if (s.getAptNumber() == apartmentNum) {
+                    ((Apartment) p).setAvailable(false);
+                }
+            }
+        }
+    }
+
+
+
 }

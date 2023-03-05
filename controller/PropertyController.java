@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class PropertyController {
     private PropertyView propertyView;
+    PropertyController pc;
     public static ArrayList<Property> properties = new ArrayList<>();
 
     public ArrayList<Property> getProperties() {
@@ -61,13 +62,11 @@ public class PropertyController {
 
         }
         properties.add(sd);
-}
+    }
 
 
-
-
-    public void addNewBuilding (String type,int id, String street, String city, String postalCode,int streetNumber,
-    int numberofUnits, String buildingName){
+    public void addNewBuilding(String type, int id, String street, String city, String postalCode, int streetNumber,
+                               int numberofUnits, String buildingName) {
         MultiPlex mx = null;
         if (type.equals("condoBuilding")) {
             mx = new CondoBuilding(type, id, false, street, city, postalCode, streetNumber, numberofUnits, buildingName);
@@ -78,5 +77,20 @@ public class PropertyController {
         }
         properties.add(mx);
 
+    }
+
+
+    public void changeAvailableFlag(int buildingID, int apartmentNum) {
+
+        for (Property p : pc.getProperties()) {
+            if (!(p.getType().equalsIgnoreCase("condoBuilding")) &&
+                    !(p.getType().equalsIgnoreCase("aptBuilding")) &&
+                    (p.getBuildingId() == buildingID)) {
+                Apartment s = (Apartment) p;
+                if (s.getAptNumber() == apartmentNum) {
+                    ((Apartment) p).setAvailable(false);
+                }
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@ public interface Property {
 
     int getId();
 
+    int getBuildingId();
     String getStreet();
 
     String getCity();

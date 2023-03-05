@@ -14,12 +14,10 @@ public class DBConnectionTest {
     @InjectMocks private DBConnection dbConnection;
     @Mock private Connection mockConnection;
     @Mock private Statement mockStatement;
-
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
-
     @Test
     public void testMockDBConnection() throws Exception {
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
