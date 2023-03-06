@@ -2,6 +2,7 @@ package view;
 
 import controller.PropertyController;
 import model.Apartment;
+import model.Condo;
 import model.Property;
 import model.SingleDwelling;
 
@@ -164,7 +165,7 @@ public class PropertyView {
         Scanner read = null;
         String country;
         try {
-            read = new Scanner(new File("ph1\\src\\data\\sampleProps.txt"));
+            read = new Scanner(new File("data\\sampleProps.txt"));
             read.useDelimiter(",");
             while (read.hasNext())
             {
@@ -186,7 +187,7 @@ public class PropertyView {
         read.close();
 //        read house list
         try{
-            read = new Scanner(new File("ph1\\src\\data\\sampleHouse.txt"));
+            read = new Scanner(new File("data\\sampleHouse.txt"));
             read.useDelimiter(",");
 
             while (read.hasNext()) {
@@ -207,7 +208,7 @@ public class PropertyView {
         read.close();
         //read apartment/condo list
         try{
-            read = new Scanner(new File("ph1\\src\\data\\sampleCondo.txt"));
+            read = new Scanner(new File("data\\sampleCondo.txt"));
             read.useDelimiter(",");
 
             while (read.hasNext()) {
@@ -254,18 +255,78 @@ public class PropertyView {
         }
     }
 
-    public void changeAvailableFlag(int buildingID, int apartmentNum) {
+    public void changeAvailableFlag(int buildingID, int unitNum) {
 
         for (Property p : pc.getProperties()) {
             if (!(p.getType().equalsIgnoreCase("condoBuilding")) &&
                     !(p.getType().equalsIgnoreCase("aptBuilding")) &&
                     (p.getBuildingId() == buildingID)) {
-                Apartment s = (Apartment) p;
-                if (s.getAptNumber() == apartmentNum) {
-                    ((Apartment) p).setAvailable(false);
+
+                if (p.getType().equals("apartment")) {
+                    Apartment s = (Apartment) p;
+                    if (s.getAptNumber() == unitNum) {
+                        ((Apartment) p).setAvailable(false);
+                    }
+                }
+
+                else if (p.getType().equals("condo")) {
+                    Condo c = (Condo) p;
+                    if (c.getCondoNumber() == unitNum) {
+                        ((Condo) c).setAvailable(false);
+                    }
                 }
             }
         }
+    }
+
+    public boolean checkID(int buildingID) {
+        boolean out = false;
+
+        for (Property p : pc.getProperties()) {
+            if (p.getBuildingId() == buildingID) {
+                out = true;
+            }
+        }
+        return out;
+    }
+
+    public boolean checkApartmentNo(int buildingID, int apartmentNum) {
+        boolean out = false;
+
+        for (Property p : pc.getProperties()) {
+            if (p.getBuildingId() == buildingID && p.isAvailable() == true) {
+                Apartment s = (Apartment) p;
+                if (s.getAptNumber() == apartmentNum) {
+                    out = true;
+                }
+            }
+        }
+        return out;
+    }
+
+    public boolean checkCondoNo(int buildingID, int condoNum) {
+        boolean out = false;
+
+        for (Property p : pc.getProperties()) {
+            if (p.getBuildingId() == buildingID && p.isAvailable() == true) {
+                Condo c = (Condo) p;
+                if (c.getCondoNumber() == condoNum) {
+                    out = true;
+                }
+            }
+        }
+        return out;
+    }
+
+    public boolean isCondo(int buildingID) {
+        boolean out = false;
+
+        for (Property p : pc. getProperties()) {
+            if ((p.getBuildingId() == buildingID) && (p.getType().equals("condo"))) {
+                out = true;
+            }
+        }
+        return out;
     }
 
 

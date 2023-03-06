@@ -16,7 +16,7 @@ public class TenantView extends Tenant {
         Tenant tenant = new Tenant();
         Lease lease = new Lease();
         LeaseView lv = new LeaseView();
-        PropertyController pc;
+        PropertyView pv = new PropertyView();
 
         Scanner sc = new Scanner(System.in);
 
@@ -36,33 +36,98 @@ public class TenantView extends Tenant {
         email = tenant.getEmail();
 
         if (isCurrentTenant == false) {
-            System.out.println("Input the apartment building ID the potential tenant is interested in: ");
-            buildingTenantID = sc.nextInt();
 
-            System.out.println("Input apartment number potential tenant is interested in:");
-            apartmentNum = sc.nextInt();
+            while (true) {
+
+                System.out.println("Input the building ID the potential tenant is interested in: ");
+                buildingTenantID = sc.nextInt();
+
+                if (pv.checkID(buildingTenantID)) {
+                    break;
+                }
+                else {
+                    System.out.println("The inputted building ID does not match any building ID in the system. Please try again.");
+                }
+
+            }
+
+            while (true) {
+
+                System.out.println("Input unit number the potential tenant is interested in renting:");
+                apartmentNum = sc.nextInt();
+
+                if (pv.isCondo(buildingTenantID)) {
+                    if (pv.checkCondoNo(buildingTenantID,apartmentNum) == true) {
+                        break;
+                    }
+
+                    else {
+                        System.out.println("The inputted unit number does not match any unit number for this building. Please try again.");
+                    }
+                }
+
+                else {
+
+                    if (pv.checkApartmentNo(buildingTenantID, apartmentNum) == true) {
+                        break;
+                    } else {
+                        System.out.println("The inputted unit number does not match any unit number for this building. Please try again.");
+                    }
+                }
+            }
 
             tenant.setID();
             tenantID = tenant.getTenantID();
             System.out.println("This tenants ID is: " + tenant.getTenantID());
 
         } else if (isCurrentTenant == true) {
-            System.out.println("Input the apartment building ID the tenant is living in: ");
-            buildingTenantID = sc.nextInt();
 
-            System.out.println("Input apartment number tenant is renting:");
-            apartmentNum = sc.nextInt();
+            while (true) {
+
+                System.out.println("Input the building ID the tenant is living in: ");
+                buildingTenantID = sc.nextInt();
+
+                if (pv.checkID(buildingTenantID) == true) {
+                    break;
+                }
+                else {
+                    System.out.println("The inputted building ID does not match any building ID in the system. Please try again.");
+                }
+            }
+
+            while (true) {
+
+                System.out.println("Input unit number tenant is renting:");
+                apartmentNum = sc.nextInt();
+
+                if (pv.isCondo(buildingTenantID)) {
+                    if (pv.checkCondoNo(buildingTenantID,apartmentNum) == true) {
+                        break;
+                    }
+
+                    else {
+                        System.out.println("The inputted unit number does not match any unit number for this building. Please try again.");
+                    }
+                }
+
+                else {
+
+                    if (pv.checkApartmentNo(buildingTenantID, apartmentNum) == true) {
+                        break;
+                    } else {
+                        System.out.println("The inputted unit number does not match any unit number for this building. Please try again.");
+                    }
+                }
+            }
 
             tenant.setID();
             tenantID = tenant.getTenantID();
             System.out.println("This tenants ID is: " + tenant.getTenantID());
 
-            PropertyView pv = new PropertyView();
+
             pv.changeAvailableFlag(buildingTenantID,apartmentNum);
 
             lv.LeaseInput();
-
-
         }
 
         TenantController tc = new TenantController();
