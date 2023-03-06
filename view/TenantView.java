@@ -10,7 +10,7 @@ import model.Tenant;
 import model.Lease;
 
 public class TenantView extends Tenant {
-
+    boolean availabilityFlag;
 
     public void TenantInput() {
         Tenant tenant = new Tenant();
@@ -35,6 +35,7 @@ public class TenantView extends Tenant {
         tenant.setEmail(sc.next());
         email = tenant.getEmail();
 
+        //Block of code for potential tenants
         if (isCurrentTenant == false) {
 
             while (true) {
@@ -57,29 +58,42 @@ public class TenantView extends Tenant {
                 apartmentNum = sc.nextInt();
 
                 if (pv.isCondo(buildingTenantID)) {
+                    availabilityFlag = pv.checkCondoAvailability(buildingTenantID, apartmentNum);
                     if (pv.checkCondoNo(buildingTenantID,apartmentNum) == true) {
                         break;
                     }
 
                     else {
-                        System.out.println("The inputted unit number does not match any unit number for this building. Please try again.");
+                        System.out.println("The inputted unit number does not match any unit number for this building or is not available. Please try again.");
                     }
                 }
 
                 else {
+                    availabilityFlag = pv.checkApartmentAvailability(buildingTenantID, apartmentNum);
 
                     if (pv.checkApartmentNo(buildingTenantID, apartmentNum) == true) {
                         break;
                     } else {
-                        System.out.println("The inputted unit number does not match any unit number for this building. Please try again.");
+                        System.out.println("The inputted unit number does not match any unit number for this building or is not available. Please try again.");
                     }
                 }
             }
+
 
             tenant.setID();
             tenantID = tenant.getTenantID();
             System.out.println("This tenants ID is: " + tenant.getTenantID());
 
+            if (availabilityFlag) {
+                System.out.println("The unit number the potential tenant is interested in is currently AVAILABLE");
+            }
+
+            else {
+                System.out.println("The unit number the potential tenant is interested in is currently UNAVAILABLE");
+            }
+
+
+        //Block of code for current tenants
         } else if (isCurrentTenant == true) {
 
             while (true) {
@@ -100,8 +114,10 @@ public class TenantView extends Tenant {
                 System.out.println("Input unit number tenant is renting:");
                 apartmentNum = sc.nextInt();
 
+                //Check if inputted number is a condo or apartment unit and if the condo or apartment number exists within the system before moving on
+
                 if (pv.isCondo(buildingTenantID)) {
-                    if (pv.checkCondoNo(buildingTenantID,apartmentNum) == true) {
+                    if ((pv.checkCondoNo(buildingTenantID,apartmentNum) == true) && (pv.checkCondoAvailability(buildingTenantID,apartmentNum))) {
                         break;
                     }
 
@@ -112,7 +128,7 @@ public class TenantView extends Tenant {
 
                 else {
 
-                    if (pv.checkApartmentNo(buildingTenantID, apartmentNum) == true) {
+                    if (pv.checkApartmentNo(buildingTenantID, apartmentNum) == true && pv.checkApartmentAvailability(buildingTenantID,apartmentNum)) {
                         break;
                     } else {
                         System.out.println("The inputted unit number does not match any unit number for this building. Please try again.");

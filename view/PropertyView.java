@@ -294,7 +294,7 @@ public class PropertyView {
         boolean out = false;
 
         for (Property p : pc.getProperties()) {
-            if (p.getBuildingId() == buildingID && p.isAvailable() == true) {
+            if (p.getBuildingId() == buildingID) {
                 Apartment s = (Apartment) p;
                 if (s.getAptNumber() == apartmentNum) {
                     out = true;
@@ -308,7 +308,7 @@ public class PropertyView {
         boolean out = false;
 
         for (Property p : pc.getProperties()) {
-            if (p.getBuildingId() == buildingID && p.isAvailable() == true) {
+            if (p.getBuildingId() == buildingID) {
                 Condo c = (Condo) p;
                 if (c.getCondoNumber() == condoNum) {
                     out = true;
@@ -326,6 +326,36 @@ public class PropertyView {
                 out = true;
             }
         }
+        return out;
+    }
+
+    public boolean checkCondoAvailability(int buildingID, int unitNumber) {
+        boolean out = false;
+
+        for (Property p : pc. getProperties()) {
+            if (p.getBuildingId() == buildingID) {
+                Condo c = (Condo) p;
+                if (c.getCondoNumber() == unitNumber && p.isAvailable()) {
+                    out = true;
+                }
+            }
+        }
+
+        return out;
+    }
+
+    public boolean checkApartmentAvailability(int buildingID, int unitNumber) {
+        boolean out = false;
+
+        for (Property p : pc. getProperties()) {
+            if (p.getBuildingId() == buildingID) {
+                Apartment s = (Apartment) p;
+                if (s.getAptNumber() == unitNumber && p.isAvailable()) {
+                    out = true;
+                }
+            }
+        }
+
         return out;
     }
 
