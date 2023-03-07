@@ -153,7 +153,7 @@ public class PropertyView {
             int unitNumber = sc.nextInt();
             System.out.println("Enter the condo square footage, 0 for apartment");
             int sqfootage =  sc.nextInt();
-            pc.addNewSd(type, id, buildingName, true, bedrooms, bathrooms, unitNumber, sqfootage);
+            pc.addNewSd(type, id, buildingName, avail, bedrooms, bathrooms, unitNumber, sqfootage);
         }
 
     }
