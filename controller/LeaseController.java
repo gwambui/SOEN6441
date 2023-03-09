@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class LeaseController {
     public static ArrayList<Lease> leases = new ArrayList<Lease>();
+    
     public void addNewLease(int leaseID, String leaseStartDate, String leaseEndDate, Double monthlyRentAmount, boolean hasPaidRent) {
         Lease l = new Lease();
 
