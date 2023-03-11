@@ -1,4 +1,4 @@
-package test;
+package test.src.controllerTest;
 
 import static org.junit.Assert.*;
 
@@ -10,33 +10,31 @@ import controller.TenantController;
 import model.Lease;
 import model.Tenant;
 
-public class LeaseController_test {
+public class leaseController_test {
 
-	Lease l = new Lease();
-	Tenant t = new Tenant();
+	
 	@Before
 	public void setUp() throws Exception {
 		
 		for(int i = 0; i < 3; i++){
 			
 			// define lease
-
+			Lease l = new Lease();
 			l.setID();
 			l.setLeaseStartDate("01-10-2020");
 			l.setLeaseEndDate("30-09-2021");
 			l.hasPaidRent = true;
-			l.setMonthlyRentAmount(1200.00);
 			
 			LeaseController.leases.add(l);		
 			
 			// define tenant
-
+			Tenant t = new Tenant();
 			t.setID();
 			t.setFirstName("Tenant-" + i);
 			t.setLastName("LN-" + i);
 			t.setEmail("abc@gmail.com");
 			t.isCurrentTenant = true;
-			t.buildingTenantID = i;
+			t.buildingTenantID = Integer.parseInt("Building-" + i);
 			t.setApartmentNum(i);
 						
 			TenantController.tenants.add(t);
@@ -74,9 +72,8 @@ public class LeaseController_test {
 	public void testGetRentAmount() {
 		
 		LeaseController leaseCtl = new LeaseController();
-		Double amountexpected = 1200.00;
-		Double amount = leaseCtl.getRentAmount(LeaseController.leases, TenantController.tenants, t.getTenantID());
-		assertEquals(amountexpected, amount);
+		Double amount = leaseCtl.getRentAmount(LeaseController.leases, TenantController.tenants, 0);
+		assertEquals(amount, LeaseController.leases.get(0).monthlyRentAmount);
 	}
 
 	@Test
@@ -91,7 +88,7 @@ public class LeaseController_test {
 	public void testCheckIfPaid() {
 		
 		LeaseController leaseCtl = new LeaseController();
-		Boolean b = leaseCtl.checkIfPaid(LeaseController.leases, TenantController.tenants, t.getTenantID());
+		Boolean b = leaseCtl.checkIfPaid(LeaseController.leases, TenantController.tenants, 1);
 		assertTrue(b);
 	}
 

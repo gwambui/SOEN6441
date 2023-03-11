@@ -17,31 +17,30 @@ import model.Tenant;
  * @author Omar
  *
  */
-public class tenantController_test {
-
+public class TenantController_test {
+	TenantController tenantCtl = new TenantController();
+	Tenant t = new Tenant();
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
 		
-for(int i = 0; i < 3; i++){
-			
-			
+//for(int i = 0; i < 3; i++){
 			// define tenant
-			Tenant t = new Tenant();
+
 			t.setID();
-			t.setFirstName("Tenant-" + i);
-			t.setLastName("LN-" + i);
+			t.setFirstName("Tenant-1");
+			t.setLastName("LN-1");
 			t.setEmail("abc@gmail.com");
 			t.isCurrentTenant = true;
-			t.buildingName = "Building-" + i;
-			t.setApartmentNum(i);
+			t.buildingTenantID =  1;
+			t.setApartmentNum(1);
 						
 			TenantController.tenants.add(t);
 		}
 		
-	}
+	//}
 
 
 	/**
@@ -50,9 +49,9 @@ for(int i = 0; i < 3; i++){
 	@Test
 	public void testAddNewTenant() {
 		
-		TenantController tenantCtl = new TenantController();
+
 		int count = TenantController.tenants.size();
-		tenantCtl.addNewTenant(true, 1, "tenant-1", "LN-1", "abc@gmail.com", "Building-1", 1);
+		tenantCtl.addNewTenant(true, 1, "tenant-1", "LN-1", "abc@gmail.com", 1, 1);
 		assertEquals(TenantController.tenants.size(), count+1);
 		
 	}
@@ -63,24 +62,24 @@ for(int i = 0; i < 3; i++){
 	@Test
 	public void testDisplayCurrentTenants() {
 		
-		TenantController tenantCtl = new TenantController();
+//		TenantController tenantCtl = new TenantController();
 		
-		int id = tenantCtl.tenants.get(0).tenantID;
-		assertEquals(id, TenantController.tenants.get(0).tenantID);
+		int idExpected = t.getTenantID();
+		assertEquals(idExpected, tenantCtl.tenants.get(0).tenantID);
 		
-		String firstName = tenantCtl.tenants.get(0).firstName;
+		String firstName = "Tenant-1";
 		assertSame(firstName, TenantController.tenants.get(0).firstName);
 		
-		String lastName = tenantCtl.tenants.get(0).lastName;
+		String lastName = "LN-1";
 		assertSame(lastName, TenantController.tenants.get(0).lastName);
 		
-		String email = tenantCtl.tenants.get(0).email;
+		String email = "abc@gmail.com";
 		assertSame(email, TenantController.tenants.get(0).email);
 		
-		String buildingName = tenantCtl.tenants.get(0).buildingName;
-		assertSame(buildingName, TenantController.tenants.get(0).buildingName);
+		int buildingTenantID = 1;
+		assertEquals(buildingTenantID, TenantController.tenants.get(0).buildingTenantID);
 		
-		int apartmentNum = tenantCtl.tenants.get(0).apartmentNum;
+		int apartmentNum = 1;
 		assertEquals(apartmentNum, TenantController.tenants.get(0).apartmentNum);
 		
 	}

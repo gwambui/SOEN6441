@@ -2,7 +2,7 @@ package model;
 
 import java.util.Random;
 
-public class Lease extends Tenant {
+public class Lease  {
 
     public String leaseStartDate;
     public String leaseEndDate;

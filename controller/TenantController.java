@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 import java.util.ArrayList;
 
-public class TenantController extends Tenant {
+public class TenantController {
     PropertyController pc;
     public static ArrayList<Tenant> tenants = new ArrayList<Tenant>();
 

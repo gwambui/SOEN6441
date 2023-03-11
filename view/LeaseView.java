@@ -7,7 +7,16 @@ import java.util.Scanner;
 
 import model.Tenant;
 
-public class LeaseView extends Lease {
+public class LeaseView  {
+    Lease lease ;
+    int leaseID;
+    String leaseStartDate;
+    String leaseEndDate;
+    Double monthlyRentAmount;
+
+    public LeaseView() {
+        this.lease = new Lease();
+    }
 
     public void LeaseInput() {
         Lease lease = new Lease();
