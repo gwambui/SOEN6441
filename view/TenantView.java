@@ -12,6 +12,7 @@ import model.Lease;
 public class TenantView extends Tenant {
     boolean availabilityFlag;
 
+    //Tenant Input view called when add a tenant choice is chosen
     public void TenantInput() {
         Tenant tenant = new Tenant();
         Lease lease = new Lease();
@@ -20,6 +21,7 @@ public class TenantView extends Tenant {
 
         Scanner sc = new Scanner(System.in);
 
+        //All types of tenants will receive the following prompts
         System.out.println("Is this tenant a current tenant? (true/false)");
         isCurrentTenant = sc.nextBoolean();
 
@@ -35,7 +37,7 @@ public class TenantView extends Tenant {
         tenant.setEmail(sc.next());
         email = tenant.getEmail();
 
-        //Block of code for potential tenants
+        //Block of code of prompts for potential tenants
         if (isCurrentTenant == false) {
 
             while (true) {
@@ -69,6 +71,7 @@ public class TenantView extends Tenant {
                 }
 
                 else {
+                    //Change availability flag
                     availabilityFlag = pv.checkApartmentAvailability(buildingTenantID, apartmentNum);
 
                     if (pv.checkApartmentNo(buildingTenantID, apartmentNum) == true) {
@@ -79,11 +82,12 @@ public class TenantView extends Tenant {
                 }
             }
 
-
+            //Set tenant ID
             tenant.setID();
             tenantID = tenant.getTenantID();
             System.out.println("This tenants ID is: " + tenant.getTenantID());
 
+            //Message to potential tenant indicating whether or not unit is available
             if (availabilityFlag) {
                 System.out.println("The unit number the potential tenant is interested in is currently AVAILABLE");
             }
@@ -93,7 +97,7 @@ public class TenantView extends Tenant {
             }
 
 
-        //Block of code for current tenants
+        //Block of code for prompts for current tenants
         } else if (isCurrentTenant == true) {
 
             while (true) {
@@ -136,16 +140,19 @@ public class TenantView extends Tenant {
                 }
             }
 
+            //Set tenant ID
             tenant.setID();
             tenantID = tenant.getTenantID();
             System.out.println("This tenants ID is: " + tenant.getTenantID());
 
-
+            //Change availability flag
             pv.changeAvailableFlag(buildingTenantID,apartmentNum);
 
+            //Call lease input only when a current tenant is being inputted
             lv.LeaseInput();
         }
 
+        //Add a new tenant to the array list by calling controller
         TenantController tc = new TenantController();
         tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingTenantID, apartmentNum);
     }

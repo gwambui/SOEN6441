@@ -6,7 +6,8 @@ import controller.TenantController;
 import view.TenantView;
 
 public class Tenant {
-    public static ArrayList tenantAttributes = new ArrayList();
+
+    //All getter and setter functions for all parameters of tenants
     public String firstName;
     public String lastName;
     public String email;
@@ -75,6 +76,7 @@ public class Tenant {
     }
 
 
+    //Method to set current tenant flag to true or false
     public boolean setCurrentTenant(String choice) {
 
         if (choice.equals("yes")) {
@@ -89,6 +91,7 @@ public class Tenant {
         return isCurrentTenant;
     }
 
+    //Method to set random tenant ID
     public int setID() {
         Random r = new Random();
         tenantID = (250000 + r.nextInt(1000));

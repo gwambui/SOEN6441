@@ -44,15 +44,11 @@ public class Main {
         Lease lease = new Lease();
 
         // Create tenant objects
-        Tenant tenant = new Tenant();
         TenantView tv = new TenantView();
         TenantController tc = new TenantController();
         LeaseController lc = new LeaseController();
-        ExistingTenant et = new ExistingTenant();
-        PotentialTenant pt = new PotentialTenant();
         PayRentView prv = new PayRentView();
-
-        LeaseView lv = new LeaseView();
+        
 
 
         System.out.println("Hello and welcome. Please select an action!");
@@ -64,12 +60,15 @@ public class Main {
         int userChoice = 0;
         do {
 
+            //Display main menu
             System.out.println("1. Sign in as Administrator");
             System.out.println("2. Sign in as Tenant");
             System.out.println("3. Exit ");
 
             userChoice = sc.nextInt();
 
+
+            //Display Admin Menu
             if (userChoice == 1) {
                 do {
                     if (userChoice == 1) {
@@ -113,10 +112,12 @@ public class Main {
                 } while (choice != 10);
             }
 
+            //Display tenant view
             else if (userChoice == 2) {
                 prv.PayRentView();
             }
 
+            //Close program
             else if (userChoice == 3) {
                 closeProg();
                 break;
@@ -126,11 +127,13 @@ public class Main {
 
     }
 
+    //Method to close program
     private static void closeProg() {
         System.out.println("Thank you! BYE");
         System.exit(0);
     }
 
+    //Method to print admin menu
     public static void printMenu() {
         System.out.println("what do you want to do?");
         System.out.println("1. Add a property");

@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class LeaseController {
+    //Create static array list to store all lease objects
     public static ArrayList<Lease> leases = new ArrayList<Lease>();
-    
+
+    //Method to add a new lease
     public void addNewLease(int leaseID, String leaseStartDate, String leaseEndDate, Double monthlyRentAmount, boolean hasPaidRent) {
         Lease l = new Lease();
 
@@ -20,6 +22,7 @@ public class LeaseController {
         leases.add(l);
     }
 
+    //Method to display all leases by taking in lease lists of tenants and leases
     public void DisplayLeases(ArrayList<Lease> leaseList, ArrayList<Tenant> tenantList) {
         if (leaseList.isEmpty()) {
             System.out.println("There are no leases inputted in the system");
@@ -50,6 +53,7 @@ public class LeaseController {
             }
     }
 
+    //Method to get total rent amount for a specific tenant ID
     public Double getRentAmount(ArrayList<Lease> leaseList, ArrayList<Tenant> tenantList, int tenantID) {
             Double out = 0.0;
 
@@ -73,6 +77,7 @@ public class LeaseController {
         return out;
     }
 
+    //Method for tenant to pay rent, returns boolean which states whether or not tenant has paid full amount
     public boolean payRent(ArrayList<Lease> leaseList, int tenantID, ArrayList<Tenant> tenantList, double rentAmount, double amountPaid) {
         Double difference = (double) Double.compare(rentAmount, amountPaid);
         boolean out = false;
@@ -107,6 +112,7 @@ public class LeaseController {
         return out;
     }
 
+    //Method to check if tenant has paid rent
     public boolean checkIfPaid(ArrayList<Lease> leaseList, ArrayList<Tenant> tenantList, int tenantID) {
         boolean out = false;
 

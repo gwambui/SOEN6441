@@ -12,8 +12,10 @@ import java.util.ArrayList;
 
 public class TenantController {
     PropertyController pc;
+    //Set public static array list of object tenants to be used amongst several classes
     public static ArrayList<Tenant> tenants = new ArrayList<Tenant>();
 
+    //Constructor for tenant controller
     public void TenantController() {
 
         Tenant tenant = new Tenant();
@@ -28,6 +30,7 @@ public class TenantController {
 
     }
 
+    //Method to add a new tenant, must pass all correct paramaters for a new tenant
     public void addNewTenant(boolean isCurrent, int tenantID, String firstName, String lastName, String email, int buildingTenantID, int apartmentNum) {
         Tenant t = new Tenant();
 
@@ -43,6 +46,7 @@ public class TenantController {
 
     }
 
+    //Method to display current tenants
     public void DisplayCurrentTenants(ArrayList<Tenant> tenantList) {
         if (tenantList.isEmpty()) {
             System.out.println("There are no tenants inputted in the system");
@@ -60,6 +64,7 @@ public class TenantController {
         }
     }
 
+    //Method to display potential tenants
     public void DisplayPotentialTenants(ArrayList<Tenant> tenantList) {
         if (tenantList.isEmpty()) {
             System.out.println("There are no tenants inputted in the system");
@@ -76,6 +81,7 @@ public class TenantController {
         }
     }
 
+    //Method to check tenant ID, returns boolean
     public boolean checkTenantID(ArrayList<Tenant> tenantList, int inputtedID) {
        boolean out = false;
 
@@ -91,8 +97,4 @@ public class TenantController {
         return out;
     }
 
-
-
-    public void rentUnit() {
-    }
 }

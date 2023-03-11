@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class Lease  {
 
+    //All getter and setter functions for lease parameters
     public String leaseStartDate;
     public String leaseEndDate;
     public Double monthlyRentAmount;
@@ -49,6 +50,7 @@ public class Lease  {
                 '}';
     }
 
+    //Method to set random lease ID
     public int setID() {
         Random r = new Random();
         leaseID = (100000 + r.nextInt(1000));

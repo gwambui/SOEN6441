@@ -10,6 +10,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class PayRentView {
+
+    //Pay rent view called when tenant signs in
     public void PayRentView() {
         Tenant tenant = new Tenant();
         TenantController tc = new TenantController();
@@ -22,6 +24,7 @@ public class PayRentView {
         double amountPaying;
         boolean result;
 
+        //Menu for tenant to sign in and pay rent amount
         while (true) {
             System.out.println("Please input your tenant ID or type 2 to go back to main menu: ");
             inputtedID = sc.nextInt();
@@ -30,11 +33,14 @@ public class PayRentView {
                 break;
             }
 
+            //Checks if rent has already been paid, if it has, break
             if (lc.checkIfPaid(leases, tenants, inputtedID)) {
                 System.out.println("Your rent has already been paid");
                 break;
             }
 
+
+            //Only continue if ID is in system of current tenants
             if (tc.checkTenantID(tenants, inputtedID)) {
                 rentAmount = lc.getRentAmount(leases, tenants, inputtedID);
 

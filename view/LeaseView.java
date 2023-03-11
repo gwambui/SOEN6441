@@ -18,6 +18,7 @@ public class LeaseView  {
         this.lease = new Lease();
     }
 
+    //Lease input is called when a current tenants inputted
     public void LeaseInput() {
         Lease lease = new Lease();
         Scanner sc = new Scanner(System.in);
@@ -25,6 +26,7 @@ public class LeaseView  {
         lease.setID();
         leaseID = lease.getLeaseID();
 
+        //Display all prompts for lease input
         System.out.println("The lease ID associated with this tenant is: " + leaseID);
 
         System.out.println("Enter the lease start date (DD/MM/YYYY): ");
@@ -39,6 +41,7 @@ public class LeaseView  {
         lease.setMonthlyRentAmount(sc.nextDouble());
         monthlyRentAmount = lease.getMonthlyRentAmount();
 
+        //Add a new lease to the array list by calling the controller
         LeaseController lc = new LeaseController();
 
         lc.addNewLease(leaseID, leaseStartDate, leaseEndDate, monthlyRentAmount, false);
