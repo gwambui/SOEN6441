@@ -14,6 +14,11 @@ public class ApartmentBuilding extends MultiPlex{
         this.buildingName = buildingName;
     }
 
+    @Override
+    public int getBuildingId() {
+        return 0;
+    }
+
 
 
 

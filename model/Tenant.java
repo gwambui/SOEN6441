@@ -21,12 +21,13 @@ public class Tenant {
                 ", email='" + email + '\'' +
                 ", apartmentNum=" + apartmentNum +
                 ", tenantID=" + tenantID +
-                ", buildingName='" + buildingName + '\'' +
+                ", buildingName='" + buildingTenantID + '\'' +
                 ", isCurrentTenant=" + isCurrentTenant +
                 '}';
     }
 
-    public String buildingName;
+
+    public int buildingTenantID;
     public boolean isCurrentTenant;
 
     public Tenant() {
@@ -65,9 +66,14 @@ public class Tenant {
         this.apartmentNum = apartmentNum;
     }
 
-    public String getBuildingName() {
-        return buildingName;
+    public int getBuildingTenantID() {
+        return buildingTenantID;
     }
+
+    public void setBuildingTenantID(int buildingTenantID) {
+        this.buildingTenantID = buildingTenantID;
+    }
+
 
     public boolean setCurrentTenant(String choice) {
 

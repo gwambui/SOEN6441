@@ -1,10 +1,7 @@
 package controller;
 
 
-import model.ExistingTenant;
-import model.Lease;
-import model.PotentialTenant;
-import model.Tenant;
+import model.*;
 import view.LeaseView;
 import view.TenantView;
 
@@ -14,6 +11,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class TenantController extends Tenant {
+    PropertyController pc;
     public static ArrayList<Tenant> tenants = new ArrayList<Tenant>();
 
     public void TenantController() {
@@ -30,14 +28,14 @@ public class TenantController extends Tenant {
 
     }
 
-    public void addNewTenant(boolean isCurrent, int tenantID, String firstName, String lastName, String email, String buildingName, int apartmentNum) {
+    public void addNewTenant(boolean isCurrent, int tenantID, String firstName, String lastName, String email, int buildingTenantID, int apartmentNum) {
         Tenant t = new Tenant();
 
         t.firstName = firstName;
         t.lastName = lastName;
         t.email = email;
         t.isCurrentTenant = isCurrent;
-        t.buildingName = buildingName;
+        t.buildingTenantID = buildingTenantID;
         t.apartmentNum = apartmentNum;
         t.tenantID = tenantID;
 
@@ -55,7 +53,7 @@ public class TenantController extends Tenant {
                     System.out.println("The tenant name is: " + tenant.getFirstName() + " " + tenant.getLastName());
                     System.out.println("Tenant ID " + tenant.getTenantID());
                     System.out.println("The tenants email address is: " + tenant.getEmail());
-                    System.out.println("They live in building: " + tenant.getBuildingName());
+                    System.out.println("They live in building: " + tenant.getBuildingTenantID());
                     System.out.println("They are renting unit number: " + tenant.getApartmentNum() + "\n");
                 }
             }
@@ -72,7 +70,7 @@ public class TenantController extends Tenant {
                     System.out.println("The potential tenant name is: " + tenant.getFirstName() + " " + tenant.getLastName());
                     System.out.println("Tenant ID: " + tenant.getTenantID());
                     System.out.println("The potential tenants' email address is: " + tenant.getEmail());
-                    System.out.println("They are interested in apartment number " + tenant.getApartmentNum() + " in building " + tenant.getBuildingName() + "\n");
+                    System.out.println("They are interested in apartment number " + tenant.getApartmentNum() + " in building " + tenant.getBuildingTenantID() + "\n");
                 }
             }
         }
@@ -92,6 +90,7 @@ public class TenantController extends Tenant {
         }
         return out;
     }
+
 
 
     public void rentUnit() {
