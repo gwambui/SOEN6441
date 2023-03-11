@@ -14,5 +14,10 @@ public class CondoBuilding extends MultiPlex{
 
     }
 
+    @Override
+    public int getBuildingId() {
+        return 0;
+    }
+
 
 }

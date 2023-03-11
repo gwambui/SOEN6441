@@ -62,57 +62,67 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int choice = 0;
         int userChoice = 0;
-        System.out.println("1. Sign in as Administrator");
-        System.out.println("2. Sign in as Tenant");
-        userChoice = sc.nextInt();
         do {
 
-            if (userChoice == 1) {
-                printMenu();
-                choice = sc.nextInt();
+            System.out.println("1. Sign in as Administrator");
+            System.out.println("2. Sign in as Tenant");
+            System.out.println("3. Exit ");
 
-                switch (choice) {
-                    case 1:
-                        pv.addProperty();
-                        break;
-                    case 2:
-                        tv.TenantInput();
-                        break;
-                    case 3:
-                        tc.rentUnit();
-                        break;
-                    case 4:
-                        pv.displayProperties();
-                        break;
-                    case 5:
-                        tc.DisplayCurrentTenants(tenants);
-                        break;
-                    case 6:
-                        tc.DisplayPotentialTenants(tenants);
-                        break;
-                    case 7:
-                        pv.displayRentedUnits();
-                        break;
-                    case 8:
-                        pv.displayVacantUnits();
-                        break;
-                    case 9:
-                        lc.DisplayLeases(leases, tenants);
-                        break;
-                    case 10:
-                        pv.addHistoricalProperty();
-                        break;
-                    case 11:
-                        closeProg();
-                        break;
-                    default:
-                        System.out.println("Wrong input");
-                }
+            userChoice = sc.nextInt();
+
+            if (userChoice == 1) {
+                do {
+                    if (userChoice == 1) {
+                        printMenu();
+                        choice = sc.nextInt();
+
+                        switch (choice) {
+                            case 1:
+                                pv.addProperty();
+                                break;
+                            case 2:
+                                tv.TenantInput();
+                                break;
+                            case 3:
+                                pv.displayProperties();
+                                break;
+                            case 4:
+                                tc.DisplayCurrentTenants(tenants);
+                                break;
+                            case 5:
+                                tc.DisplayPotentialTenants(tenants);
+                                break;
+                            case 6:
+                                pv.displayRentedUnits();
+                                break;
+                            case 7:
+                                pv.displayVacantUnits();
+                                break;
+                            case 8:
+                                lc.DisplayLeases(leases, tenants);
+                                break;
+                            case 9:
+                                pv.addHistoricalProperty();
+                                break;
+                            case 10:
+                                break;
+                            default:
+                                System.out.println("Wrong input");
+                        }
+                    }
+                } while (choice != 10);
             }
-            else if(userChoice == 2){
+
+            else if (userChoice == 2) {
                 prv.PayRentView();
             }
-        } while (choice != 11);
+
+            else if (userChoice == 3) {
+                closeProg();
+                break;
+            }
+
+        } while (choice != 3);
 
     }
 
@@ -121,20 +131,18 @@ public class Main {
         System.exit(0);
     }
 
-
     public static void printMenu() {
         System.out.println("what do you want to do?");
         System.out.println("1. Add a property");
-        System.out.println("2. Add a tenant");
-        System.out.println("3. Rent a unit");
-        System.out.println("4. Display properties ");
-        System.out.println("5. Display tenants");
-        System.out.println("6. Display Potential Tenants");
-        System.out.println("7. Display rented units");
-        System.out.println("8. Display vacant units");
-        System.out.println("9. Display all leases");
-        System.out.println("10. Load historical property from list");
-        System.out.println("11. Exit");
+        System.out.println("2. Add a tenant/Rent a Unit");
+        System.out.println("3. Display properties ");
+        System.out.println("4. Display tenants");
+        System.out.println("5. Display Potential Tenants");
+        System.out.println("6. Display rented units");
+        System.out.println("7. Display vacant units");
+        System.out.println("8. Display all leases");
+        System.out.println("9. Load historical property from list");
+        System.out.println("10. Go back to main menu");
         System.out.println("Please enter your choice");
     }
 

@@ -34,4 +34,8 @@ public class Condo extends SingleDwelling{
     public String getStreet() {
         return street;
     }
+
+    public int getCondoNumber() {
+        return UnitNumber;
+    }
 }

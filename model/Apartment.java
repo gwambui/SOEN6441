@@ -33,4 +33,8 @@ public class Apartment extends SingleDwelling{
         return street;
     }
 
+    public int getAptNumber() {
+        return aptNumber;
+    }
+
 }

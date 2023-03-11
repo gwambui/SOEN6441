@@ -1,6 +1,8 @@
 package view;
 
 import controller.PropertyController;
+import model.Apartment;
+import model.Condo;
 import model.Property;
 import model.SingleDwelling;
 
@@ -151,7 +153,7 @@ public class PropertyView {
             int unitNumber = sc.nextInt();
             System.out.println("Enter the condo square footage, 0 for apartment");
             int sqfootage =  sc.nextInt();
-            pc.addNewSd(type, id, buildingName, true, bedrooms, bathrooms, unitNumber, sqfootage);
+            pc.addNewSd(type, id, buildingName, avail, bedrooms, bathrooms, unitNumber, sqfootage);
         }
 
     }
@@ -163,7 +165,7 @@ public class PropertyView {
         Scanner read = null;
         String country;
         try {
-            read = new Scanner(new File("ph1\\src\\data\\sampleProps.txt"));
+            read = new Scanner(new File("data\\sampleProps.txt"));
             read.useDelimiter(",");
             while (read.hasNext())
             {
@@ -185,7 +187,7 @@ public class PropertyView {
         read.close();
 //        read house list
         try{
-            read = new Scanner(new File("ph1\\src\\data\\sampleHouse.txt"));
+            read = new Scanner(new File("data\\sampleHouse.txt"));
             read.useDelimiter(",");
 
             while (read.hasNext()) {
@@ -206,7 +208,7 @@ public class PropertyView {
         read.close();
         //read apartment/condo list
         try{
-            read = new Scanner(new File("ph1\\src\\data\\sampleCondo.txt"));
+            read = new Scanner(new File("data\\sampleCondo.txt"));
             read.useDelimiter(",");
 
             while (read.hasNext()) {
@@ -252,4 +254,111 @@ public class PropertyView {
             }
         }
     }
+
+    public void changeAvailableFlag(int buildingID, int unitNum) {
+
+        for (Property p : pc.getProperties()) {
+            if (!(p.getType().equalsIgnoreCase("condoBuilding")) &&
+                    !(p.getType().equalsIgnoreCase("aptBuilding")) &&
+                    (p.getBuildingId() == buildingID)) {
+
+                if (p.getType().equals("apartment")) {
+                    Apartment s = (Apartment) p;
+                    if (s.getAptNumber() == unitNum) {
+                        ((Apartment) p).setAvailable(false);
+                    }
+                }
+
+                else if (p.getType().equals("condo")) {
+                    Condo c = (Condo) p;
+                    if (c.getCondoNumber() == unitNum) {
+                        ((Condo) c).setAvailable(false);
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean checkID(int buildingID) {
+        boolean out = false;
+
+        for (Property p : pc.getProperties()) {
+            if (p.getBuildingId() == buildingID) {
+                out = true;
+            }
+        }
+        return out;
+    }
+
+    public boolean checkApartmentNo(int buildingID, int apartmentNum) {
+        boolean out = false;
+
+        for (Property p : pc.getProperties()) {
+            if (p.getBuildingId() == buildingID) {
+                Apartment s = (Apartment) p;
+                if (s.getAptNumber() == apartmentNum) {
+                    out = true;
+                }
+            }
+        }
+        return out;
+    }
+
+    public boolean checkCondoNo(int buildingID, int condoNum) {
+        boolean out = false;
+
+        for (Property p : pc.getProperties()) {
+            if (p.getBuildingId() == buildingID) {
+                Condo c = (Condo) p;
+                if (c.getCondoNumber() == condoNum) {
+                    out = true;
+                }
+            }
+        }
+        return out;
+    }
+
+    public boolean isCondo(int buildingID) {
+        boolean out = false;
+
+        for (Property p : pc. getProperties()) {
+            if ((p.getBuildingId() == buildingID) && (p.getType().equals("condo"))) {
+                out = true;
+            }
+        }
+        return out;
+    }
+
+    public boolean checkCondoAvailability(int buildingID, int unitNumber) {
+        boolean out = false;
+
+        for (Property p : pc. getProperties()) {
+            if (p.getBuildingId() == buildingID) {
+                Condo c = (Condo) p;
+                if (c.getCondoNumber() == unitNumber && p.isAvailable()) {
+                    out = true;
+                }
+            }
+        }
+
+        return out;
+    }
+
+    public boolean checkApartmentAvailability(int buildingID, int unitNumber) {
+        boolean out = false;
+
+        for (Property p : pc. getProperties()) {
+            if (p.getBuildingId() == buildingID) {
+                Apartment s = (Apartment) p;
+                if (s.getAptNumber() == unitNumber && p.isAvailable()) {
+                    out = true;
+                }
+            }
+        }
+
+        return out;
+    }
+
+
+
 }
