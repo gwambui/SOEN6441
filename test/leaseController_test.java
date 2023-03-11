@@ -25,9 +25,7 @@ public class leaseController_test {
 			l.setLeaseEndDate("30-09-2021");
 			l.hasPaidRent = true;
 			
-			LeaseController.leases.add(l);
-			
-			
+			LeaseController.leases.add(l);		
 			
 			// define tenant
 			Tenant t = new Tenant();
@@ -47,8 +45,27 @@ public class leaseController_test {
 	public void testAddNewLease() {
 		LeaseController leaseCtl = new LeaseController();
 		int count = LeaseController.leases.size();
-		leaseCtl.addNewLease(1, "01-10-2020", "c", 1200.0, true);
+		leaseCtl.addNewLease(1, "01-10-2020", "30-09-2021", 1200.0, true);
 		assertEquals(LeaseController.leases.size(), count+1);
+	}
+	
+	@Test
+	public void displayLeases(){
+		
+		LeaseController leaseCtl = new LeaseController();
+		int id1 = leaseCtl.leases.get(0).getLeaseID();
+		assertEquals(id1, LeaseController.leases.get(0).leaseID);
+		
+		TenantController tenantCtl = new TenantController();
+		int id2 = tenantCtl.tenants.get(0).getTenantID();
+		assertEquals(id2, TenantController.tenants.get(0).tenantID);
+		
+		String leaseStartDate = leaseCtl.leases.get(0).leaseStartDate;
+		assertSame(leaseStartDate, LeaseController.leases.get(0).leaseStartDate);
+		
+		String leaseEndDate = leaseCtl.leases.get(0).leaseEndDate;
+		assertSame(leaseEndDate, LeaseController.leases.get(0).leaseEndDate);
+		
 	}
 
 	@Test
