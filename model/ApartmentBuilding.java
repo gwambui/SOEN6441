@@ -1,5 +1,9 @@
 package model;
-
+/*
+    ApartmentBuilding extends the Multiplex class which implements Property interface
+    Multiplex represents buildings that contain more than one single dwelling.
+    Multiplex handles all the common attributes of its child classes
+ */
 public class ApartmentBuilding extends MultiPlex{
     public ApartmentBuilding(String type, int ID, boolean available, String street, String city, String postalCode, int streetNumber, int numberofUnits, String buildingName) {
 

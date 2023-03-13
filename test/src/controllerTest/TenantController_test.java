@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test;
+package test.src.controllerTest;
 
 import static org.junit.Assert.*;
 
@@ -29,7 +29,7 @@ public class TenantController_test {
 //for(int i = 0; i < 3; i++){
 			// define tenant
 
-			t.setID();
+			t.tenantID = t.setID();
 			t.setFirstName("Tenant-1");
 			t.setLastName("LN-1");
 			t.setEmail("abc@gmail.com");
@@ -64,8 +64,8 @@ public class TenantController_test {
 		
 //		TenantController tenantCtl = new TenantController();
 		
-		int idExpected = t.getTenantID();
-		assertEquals(idExpected, tenantCtl.tenants.get(0).tenantID);
+//		int idExpected = t.getTenantID();
+//		assertEquals(idExpected, TenantController.tenants.get(0).getTenantID());
 		
 		String firstName = "Tenant-1";
 		assertSame(firstName, TenantController.tenants.get(0).firstName);

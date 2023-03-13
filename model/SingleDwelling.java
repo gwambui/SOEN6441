@@ -1,5 +1,8 @@
 package model;
-
+/*
+    SingleDwelling class implements the property interface. Its child classes are Condo, Apartment and House.
+    SingleDwelling initializes most of the attributes for its child objects and does the object prints
+ */
 public abstract class SingleDwelling implements Property{
     int id;
 

@@ -1,5 +1,7 @@
 package model;
-
+/*
+    Condo class extends SingleDwelling which implements the property interface.
+ */
 public class Condo extends SingleDwelling{
 
     int sqfootage;

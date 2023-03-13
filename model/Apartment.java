@@ -1,5 +1,7 @@
 package model;
-
+/*
+    Apartment class extends SingleDwelling which implements the property interface.
+ */
 public class Apartment extends SingleDwelling{
 
     int aptNumber;

@@ -1,5 +1,7 @@
 package model;
-
+/*
+    House class extends SingleDwelling which implements the property interface.
+ */
 public class House extends SingleDwelling  {
 
 

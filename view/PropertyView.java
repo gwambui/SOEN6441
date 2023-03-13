@@ -165,7 +165,7 @@ public class PropertyView {
         Scanner read = null;
         String country;
         try {
-            read = new Scanner(new File("data\\sampleProps.txt"));
+            read = new Scanner(new File("..\\data\\sampleProps.txt"));
             read.useDelimiter(",");
             while (read.hasNext())
             {
