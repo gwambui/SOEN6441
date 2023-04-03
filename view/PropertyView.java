@@ -165,7 +165,7 @@ public class PropertyView {
         Scanner read = null;
         String country;
         try {
-            read = new Scanner(new File("..\\data\\sampleProps.txt"));
+            read = new Scanner(new File("ph1\\src\\data\\sampleProps.txt"));
             read.useDelimiter(",");
             while (read.hasNext())
             {
@@ -187,7 +187,7 @@ public class PropertyView {
         read.close();
 //        read house list
         try{
-            read = new Scanner(new File("data\\sampleHouse.txt"));
+            read = new Scanner(new File("ph1\\src\\data\\sampleHouse.txt"));
             read.useDelimiter(",");
 
             while (read.hasNext()) {
@@ -208,7 +208,7 @@ public class PropertyView {
         read.close();
         //read apartment/condo list
         try{
-            read = new Scanner(new File("data\\sampleCondo.txt"));
+            read = new Scanner(new File("ph1\\src\\data\\sampleCondo.txt"));
             read.useDelimiter(",");
 
             while (read.hasNext()) {

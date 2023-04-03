@@ -4,6 +4,7 @@ package view;
 import controller.PropertyController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -12,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -21,12 +23,14 @@ import model.Condo;
 import model.Property;
 import model.SingleDwelling;
 
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Random;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.function.ToDoubleBiFunction;
 
 public class PropertyViewFX {
 
@@ -81,14 +85,19 @@ public class PropertyViewFX {
     public void addProperty(Group base) {
 //        Property grop
         Group propertyGroup = new Group();
-        base.getChildren().removeAll();
 //        Create radio button to select propery type
-        Label propLabel = new Label("what Type of property will you add");
+        Label propLabel = new Label("What type of property will you add");
         RadioButton prb1 = new RadioButton("house");
         RadioButton prb2 = new RadioButton("apartment");
         RadioButton prb3 = new RadioButton("condo");
         RadioButton prb4 = new RadioButton("apartment building");
         RadioButton prb5 = new RadioButton("condo building");
+
+        prb1.setUserData("house");
+        prb2.setUserData("apartment");
+        prb3.setUserData("condo");
+        prb4.setUserData("apartment building");
+        prb5.setUserData("condo building");
 
         final ToggleGroup propToggle = new ToggleGroup();
         prb1.setToggleGroup(propToggle);
@@ -104,71 +113,133 @@ public class PropertyViewFX {
 
 //        Create form to fill property info
         GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
+        grid.setAlignment(Pos.CENTER_LEFT);
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
-        base.getChildren().removeAll();
+
+        grid.setPadding(new Insets(25, 125, 25, 25));
+//        grid.setPadding(new Insets(25, 25, 25, 25));
         propertyGroup.getChildren().addAll(propBox);
         base.getChildren().add(propertyGroup);
-        Scene scene = new Scene(base, 300, 275);
+//        Scene scene = new Scene(base, 300, 275);
 
         propToggle.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
             @Override
             public void changed(ObservableValue<? extends Toggle> ov,
                                 Toggle old_toggle, Toggle new_toggle) {
-                RadioButton rb = (RadioButton)propToggle.getSelectedToggle();
-                if (rb != null) {
-                    String selection = rb.getText();
+                RadioButton rbp = (RadioButton)propToggle.getSelectedToggle();
+                propLabel.setText(" selected");
+                if (rbp != null) {
+                    String selection = propToggle.getSelectedToggle().getUserData().toString();
                     propLabel.setText(selection + " selected");
                     if (selection.equalsIgnoreCase("house")) {
-                        houseform(grid);
+                        propertyGroup.getChildren().remove(propBox);
+                        houseform(grid,propertyGroup);
+
                     }else if (selection.equalsIgnoreCase("apartment") || selection.equalsIgnoreCase("condo")) {
-                        apartmentCondoform(grid);
+                        apartmentCondoform(grid,base);
                     }else if (selection.equalsIgnoreCase("apartment building")|| selection.equalsIgnoreCase("condo building")) {
-                        houseform(grid);
+                        buildingForm(grid,base);
                     }
-                    propertyGroup.getChildren().addAll(propBox);
+
                 }
             }
         });
 
-        stage.setScene(scene);
-        stage.show();
+
     }
 
-    public void houseform(GridPane grid){
+    public void houseform(GridPane grid,Group pGroup){
+
         id = (int)Math.floor(Math.random() * (10000 - 999 + 1) + 999);
         Text scenetitle = new Text("To add a house, please provide the following details");
+        scenetitle.setX(100);
+        scenetitle.setY(100);
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        grid.add(scenetitle, 0, 0, 2, 1);
 
-        TextField streetName = new TextField("street name:");
-        grid.add(streetName, 0, 1);
+        grid.add(scenetitle, 0, 4, 2, 1);
 
-        TextField cityName = new TextField("city name:");
-        grid.add(streetName, 0, 1);
+        Label streetlabel = new Label("street name:");
+        grid.add(streetlabel, 0, 5);
 
-        TextField postalCode = new TextField("postal code:");
-        grid.add(postalCode, 0, 1);
+        TextField streetName = new TextField();
+        grid.add(streetName, 1, 5);
 
-        TextField streetNumber = new TextField("street number:");
-        grid.add(streetNumber, 0, 1);
+        Label citylabel = new Label("city name:");
+        grid.add(citylabel, 0, 6);
 
-        TextField avail = new TextField("Is the property available? y/n");
-        grid.add(avail, 1, 1);
+        TextField cityName = new TextField();
+        grid.add(cityName, 1, 6);
 
-        TextField bedrooms = new TextField("number of bedrooms");
-        grid.add(bedrooms, 1, 1);
+        Label postalCodeLabel = new Label("postal code:");
+        grid.add(postalCodeLabel, 0, 7);
 
-        TextField bathrooms = new TextField("number of bathrooms");
-        grid.add(bathrooms, 1, 1);
+        TextField pCode = new TextField();
+        grid.add(pCode, 1, 7);
 
-//        pc.addNewSd(type, id,  avail, street, city, postalCode, streetNumber, bedrooms, bathrooms);
+        Label strNumberLabel = new Label("street number:");
+        grid.add(strNumberLabel, 0, 8);
+
+        TextField strNum = new TextField();
+        grid.add(strNum, 1, 8);
+
+        Label availLabel = new Label("Is the property available? y/n:");
+        grid.add(availLabel, 0, 9);
+
+        TextField available = new TextField();
+        grid.add(available, 1, 9);
+
+        Label bedLabel = new Label("number of bedrooms");
+        grid.add(bedLabel, 0, 10);
+
+        TextField beds = new TextField();
+        grid.add(beds, 1, 10);
+
+        Label bathLabel = new Label("number of bathrooms");
+        grid.add(bathLabel, 0, 11);
+
+        TextField baths = new TextField();
+        grid.add(baths, 1, 11);
+
+        Button btn = new Button("SUBMIT");
+        HBox hbBtn = new HBox(10);
+        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn.getChildren().add(btn);
+        grid.add(hbBtn, 1, 13);
+        pGroup.getChildren().add(grid);
+
+        final Text actiontarget = new Text();
+        grid.add(actiontarget, 0, 13);
+
+        btn.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
+            @Override
+            public void handle(javafx.event.ActionEvent e) {
+                actiontarget.setFill(Color.BLUEVIOLET);
+                actiontarget.setText("Information submitted");
+                String street = streetName.getText();
+                Boolean avail = available.getText().equalsIgnoreCase ("y")? true : false;
+                String postalCode = pCode.getText();
+                Integer bedrooms = Integer.parseInt(beds.getText());
+                Integer bathrooms = Integer.parseInt(baths.getText());
+                String city = cityName.getText();
+                Integer streetNumber = Integer.parseInt(strNum.getText());
+//                TODO
+//                PASS THIS ACTION TO ANOTHER THREAD
+                pc.addNewSd(type, id,  avail, street, city, postalCode, streetNumber, bedrooms, bathrooms);
+            }
+
+        });
+
+
+//        Scene scene = new Scene(pGroup, 300, 275);
+//        stage.setScene(scene);
+//        stage.show();
+
+
 
     }
 
-    public void apartmentCondoform(GridPane grid){
+    public void apartmentCondoform(GridPane grid,Group base){
         id = (int)Math.floor(Math.random() * (10000 - 999 + 1) + 999);
         Text scenetitle = new Text("To add an apartment or condo, please provide the following details");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -195,7 +266,7 @@ public class PropertyViewFX {
 //        pc.addNewSd(type, id, buildingName, avail, bedrooms, bathrooms, unitNumber, sqfootage);
     }
 
-    public void buildingForm(GridPane grid){
+    public void buildingForm(GridPane grid,Group base){
         id = (int)Math.floor(Math.random() * (10000 - 999 + 1) + 999);
         Text scenetitle = new Text("To add an apartment or condo bulding, please provide the following details");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));

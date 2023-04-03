@@ -34,7 +34,7 @@ public class MainAppFx extends Application {
         //Setting title to the Stage
         stage.setTitle("Main Menu");
 
-        String greeting= "Hello and welcome. Please select an action!";
+        String greeting= "Hello and welcome!";
         Text text = new Text();
         text.setText(greeting);
         text.setX(50);
@@ -50,7 +50,6 @@ public class MainAppFx extends Application {
         final ToggleGroup mainToggle = new ToggleGroup();
 
         rb1.setToggleGroup(mainToggle);
-//        rb3.setSelected(true);
         rb2.setToggleGroup(mainToggle);
         rb3.setToggleGroup(mainToggle);
 
@@ -152,27 +151,35 @@ public class MainAppFx extends Application {
                             pvfx.addProperty(base);
                             break;
                         case "2":
+                            base.getChildren().remove(adminBox);
                             tv.TenantInput();
                             break;
                         case "3":
+                            base.getChildren().remove(adminBox);
                             pvfx.displayProperties();
                             break;
                         case "4":
+                            base.getChildren().remove(adminBox);
                             tc.DisplayCurrentTenants(tenants);
                             break;
                         case "5":
+                            base.getChildren().remove(adminBox);
                             tc.DisplayPotentialTenants(tenants);
                             break;
                         case "6":
+                            base.getChildren().remove(adminBox);
                             pvfx.displayRentedUnits();
                             break;
                         case "7":
+                            base.getChildren().remove(adminBox);
                             pvfx.displayVacantUnits();
                             break;
                         case "8":
+                            base.getChildren().remove(adminBox);
                             lc.DisplayLeases(leases, tenants);
                             break;
                         case "9":
+                            base.getChildren().remove(adminBox);
                             pvfx.addHistoricalProperty();
                             break;
                         case "10":
