@@ -21,20 +21,12 @@ package view;
 //
 //
 // -----------------------------------------------------
-import controller.PropertyController;
 import controller.TenantController;
-
 import model.Lease;
-import model.Tenant;
-import model.ExistingTenant;
-import model.PotentialTenant;
-import controller.TenantController;
 import controller.LeaseController;
-
 import static controller.LeaseController.leases;
 import static controller.TenantController.tenants;
 
-import controller.TenantController;
 import java.util.Scanner;
 
 

@@ -2,11 +2,13 @@ package controller;
 
 import model.*;
 import view.PropertyView;
+import view.PropertyViewFX;
 
 import java.util.ArrayList;
 
 public class PropertyController {
     private PropertyView propertyView;
+    private PropertyViewFX propertyViewFX;
     PropertyController pc;
     public static ArrayList<Property> properties = new ArrayList<>();
 
@@ -18,7 +20,10 @@ public class PropertyController {
         this.propertyView = propertyView;
 
     }
+    public PropertyController(PropertyViewFX propertyView) {
+        this.propertyViewFX = propertyView;
 
+    }
 
     public void addNewSd(String type, int id, boolean av, String street, String city,
                          String postalCode, int streetNumber, int bedrooms, int bathrooms) {
