@@ -101,6 +101,11 @@ public class LeaseViewFX {
             LeaseController lc = new LeaseController();
             lc.addNewLease(leaseID, leaseStartDate, leaseEndDate, monthlyRentAmount, false);
 
+            Label successLabel = new Label("Information successfully submitted!");
+            successLabel.setTextFill(Color.GREEN);
+
+            grid2.add(successLabel, 1, 6);
+
 
         });
 
