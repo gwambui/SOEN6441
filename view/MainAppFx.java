@@ -31,6 +31,7 @@ public class MainAppFx extends Application {
         LeaseController lc = new LeaseController();
         PayRentView prv = new PayRentView();
         PropertyViewFX pvfx = new PropertyViewFX(stage);
+        TenantViewFX tvfx = new TenantViewFX(stage);
         //Setting title to the Stage
         stage.setTitle("Main Menu");
 
@@ -152,7 +153,7 @@ public class MainAppFx extends Application {
                             break;
                         case "2":
                             base.getChildren().remove(adminBox);
-                            tv.TenantInput();
+                            tvfx.TenantInput(base);
                             break;
                         case "3":
                             base.getChildren().remove(adminBox);

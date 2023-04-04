@@ -1,0 +1,16 @@
+aptBuilding,5743,Franklin Street ,Alkali Lake,B3K 5M1,1028,72,Apt Tower 1,Canada,
+aptBuilding,3096,Sunrise Road ,Brampton,G0T 1E0,1067,125,Apt Tower 2,Canada,
+aptBuilding,1794,Dye Street ,Calgary,G6P 4E5,1243,122,Apt Tower 3,Canada,
+aptBuilding,7712,Wilson Street ,Calgary,H3C 5K4,2492,19,Apt Tower 4,Canada,
+aptBuilding,9297,Irving Road ,Carmacks,L4T 1A8,2808,176,Apt Tower 5,Canada,
+aptBuilding,3975,Lucy Lane ,Forestville,L6T 3W9,2815,89,Apt Tower 6,Canada,
+aptBuilding,7595,Shobe Lane ,Grayson,M2N 2G8,2847,197,Apt Tower 7,Canada,
+condoBuilding,8449,Winifred Way ,Halifax,M3B 2W6,2853,76,Condo Tower 1,Canada,
+condoBuilding,1790,Late Avenue ,Jarvis,M4A 2M5,2947,187,Condo Tower 2,Canada,
+condoBuilding,6147,Driftwood Road ,Malton,M8Z 4H4,2964,57,Condo Tower 3,Canada,
+condoBuilding,5522,Lucy Lane ,Meadow Lake,N0A 1J0,3296,173,Condo Tower 4,Canada,
+condoBuilding,4784,Columbia Boulevard ,Montreal,S0M 1V0,341,38,Condo Tower 5,Canada,
+condoBuilding,4904,Leverton Cove Road,North Pender Island,S4P 3Y2,3695,15,Condo Tower 6,Canada,
+condoBuilding,2340,Rhode Island Avenue,Toronto,T0C 2S0,3916,76,Condo Tower 7,Canada,
+condoBuilding,1925,Junkins Avenue ,Toronto,T2E 6J8,442,52,Condo Tower 8,Canada
+

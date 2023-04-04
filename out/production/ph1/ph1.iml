@@ -7,10 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" scope="TEST" name="bluecatcode.junit.4.12.extended" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="mockito.all" level="project" />
+    <orderEntry type="library" exported="" name="mockito.all" level="project" />
     <orderEntry type="library" exported="" name="junit.jupiter" level="project" />
-    <orderEntry type="library" name="bluecatcode.junit.4.12.extended" level="project" />
-    <orderEntry type="library" name="mockito.all" level="project" />
+    <orderEntry type="library" exported="" name="bluecatcode.junit.4.12.extended" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>
