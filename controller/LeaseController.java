@@ -1,11 +1,16 @@
 package controller;
 import model.Lease;
 import model.Tenant;
+import view.LeaseViewFX;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class LeaseController {
+    Stage stage = new Stage();
+    Scene scene;
     //Create static array list to store all lease objects
     public static ArrayList<Lease> leases = new ArrayList<Lease>();
 
@@ -24,6 +29,10 @@ public class LeaseController {
 
     //Method to display all leases by taking in lease lists of tenants and leases
     public void DisplayLeases(ArrayList<Lease> leaseList, ArrayList<Tenant> tenantList) {
+
+        LeaseViewFX lvfx = new LeaseViewFX(stage,scene);
+        int leaseNum = 1;
+
         if (leaseList.isEmpty()) {
             System.out.println("There are no leases inputted in the system");
         }
@@ -41,6 +50,7 @@ public class LeaseController {
                         continue;
                     }
 
+
                     System.out.println("The lease ID is: " + l1.getLeaseID());
                     System.out.println("The associated tenant ID with this lease is: " + t1.getTenantID());
                     System.out.println("The lease start date is: " + l1.getLeaseStartDate());
@@ -50,6 +60,8 @@ public class LeaseController {
                     j++;
                     i++;
                 }
+
+
             }
     }
 

@@ -31,7 +31,7 @@ public class MainAppFx extends Application {
         LeaseController lc = new LeaseController();
         PayRentView prv = new PayRentView();
         PropertyViewFX pvfx = new PropertyViewFX(stage);
-        TenantViewFX tvfx = new TenantViewFX(stage);
+
         //Setting title to the Stage
         stage.setTitle("Main Menu");
 
@@ -110,9 +110,11 @@ public class MainAppFx extends Application {
 
         //Creating a scene object
         base.getChildren().addAll(root,box);
-        Scene scene = new Scene(base, 200, 200, Color.GHOSTWHITE);
+        Scene scene = new Scene(base, 800, 800, Color.GHOSTWHITE);
         stage.setTitle("Main Menu");
 
+        TenantViewFX tvfx = new TenantViewFX(stage, scene);
+        LeaseViewFX lvfx = new LeaseViewFX(stage, scene);
 
         mainToggle.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
             @Override
@@ -153,18 +155,18 @@ public class MainAppFx extends Application {
                             break;
                         case "2":
                             base.getChildren().remove(adminBox);
-                            tvfx.TenantInput(base);
+                            tvfx.TenantInput(base, adminBox);
                             break;
                         case "3":
                             base.getChildren().remove(adminBox);
                             pvfx.displayProperties();
                             break;
                         case "4":
-                            base.getChildren().remove(adminBox);
+                            //base.getChildren().remove(adminBox);
                             tc.DisplayCurrentTenants(tenants);
                             break;
                         case "5":
-                            base.getChildren().remove(adminBox);
+                            //base.getChildren().remove(adminBox);
                             tc.DisplayPotentialTenants(tenants);
                             break;
                         case "6":
@@ -176,8 +178,9 @@ public class MainAppFx extends Application {
                             pvfx.displayVacantUnits();
                             break;
                         case "8":
-                            base.getChildren().remove(adminBox);
+                            //base.getChildren().remove(adminBox);
                             lc.DisplayLeases(leases, tenants);
+                            lvfx.DisplayAllLeases(stage, leases);
                             break;
                         case "9":
                             base.getChildren().remove(adminBox);

@@ -44,16 +44,19 @@ public class LeaseViewFX {
     String leaseEndDate;
     Double monthlyRentAmount;
     Stage stage;
+    Scene mainScene;
 
-    public LeaseViewFX(Stage stage) {
+
+
+    public LeaseViewFX(Stage stage, Scene mainScene) {
         this.stage = stage;
+        this.mainScene = mainScene;
     }
 
-    public void LeaseInput(Stage primaryStage) {
+    public void LeaseInput() {
         Lease lease = new Lease();
 
         stage.setTitle("Add a Lease");
-
         lease.setID();
         leaseID = lease.getLeaseID();
 
@@ -101,16 +104,15 @@ public class LeaseViewFX {
             LeaseController lc = new LeaseController();
             lc.addNewLease(leaseID, leaseStartDate, leaseEndDate, monthlyRentAmount, false);
 
-            Label successLabel = new Label("Information successfully submitted!");
-            successLabel.setTextFill(Color.GREEN);
+            //new scene to reset actions
 
-            grid2.add(successLabel, 1, 6);
-
+            stage.setScene(mainScene.getRoot().getScene());
+            stage.show();
 
         });
 
         // create a new scene with the grid pane
-        Scene scene = new Scene(grid2, 300, 200);
+        Scene scene = new Scene(grid2, 800, 800);
 
         // show the new scene
         stage.setScene(scene);
@@ -119,5 +121,57 @@ public class LeaseViewFX {
 
     }
 
+    public void DisplayAllLeases(Stage primaryStage, ArrayList<Lease> leaseList) {
+        int leaseNum = 1;
 
-}
+        stage.setTitle("Display All Leases");
+        VBox container = new VBox();
+        container.setPadding(new Insets(10));
+        container.setSpacing(10);
+
+
+        for (Lease l:leaseList) {
+            Label leaseLabel = new Label("Lease number: " + leaseNum);
+            container.getChildren().add(leaseLabel);
+
+            leaseLabel.setStyle("-fx-font-weight: bold;");
+
+            // Set the font size to 20 points
+            leaseLabel.setStyle("-fx-font-size: 20pt;");
+
+
+            Label leaseIDLabel = new Label("The lease ID is: " + l.getLeaseID());
+            container.getChildren().add(leaseIDLabel);
+            Label leaseStartDateLabel = new Label("The lease start date is: " + l.getLeaseStartDate());
+            container.getChildren().add(leaseStartDateLabel);
+            Label leaseEndDateLabel = new Label("The lease start date is: " + l.getLeaseEndDate());
+            container.getChildren().add(leaseEndDateLabel);
+            Label amountLabel = new Label("The monthly rent amount is: " + l.getMonthlyRentAmount());
+            container.getChildren().add(amountLabel);
+            Label hasPaidRentLabel = new Label("The monthly rent has been paid for this lease (true/false): " + l.getHasPaidRent());
+            container.getChildren().add(hasPaidRentLabel);
+            container.getChildren().add(new Label(" "));
+            leaseNum ++;
+
+        }
+
+        Button backButton = new Button("Back");
+        container.getChildren().add(backButton);
+
+        backButton.setOnAction(event -> {
+            // switch back to the main menu scene
+            stage.setScene(mainScene.getRoot().getScene());
+            stage.setTitle("Main Menu");
+            stage.show();
+        });
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(container);
+
+        Scene scene = new Scene(scrollPane, 500, 250);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        }
+
+    }

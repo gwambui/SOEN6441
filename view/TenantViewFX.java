@@ -35,18 +35,22 @@ import javafx.stage.Stage;
 public class TenantViewFX extends Tenant {
 
     Stage stage;
-    public TenantViewFX(Stage stage) {
+    Scene mainScene;
+    public TenantViewFX(Stage stage, Scene mainScene) {
         this.stage = stage;
+        this.mainScene = mainScene;
     }
 
-    public void TenantInput(Group base)  {
+    public void TenantInput(Group base, VBox adminBox)  {
         Group tenantGroup = new Group();
+
+        this.mainScene = mainScene;
 
         Tenant tenant = new Tenant();
         Lease lease = new Lease();
         LeaseView lv = new LeaseView();
         PropertyView pv = new PropertyView();
-        LeaseViewFX lvfx = new LeaseViewFX(stage);
+        LeaseViewFX lvfx = new LeaseViewFX(stage, mainScene);
 
         stage.setTitle("Add a Tenant");
         Label tenantLabel = new Label("Please select a tenant type: ");
@@ -61,10 +65,10 @@ public class TenantViewFX extends Tenant {
         prb1.setToggleGroup(tenantToggle);
         prb2.setToggleGroup(tenantToggle);
 
-        HBox propBox = new HBox(50);
-        propBox.setFillHeight(false);
-        propBox.setPadding(new Insets(100, 5, 5, 50));
-        propBox.getChildren().addAll(tenantLabel,prb1,prb2);
+        HBox tenantBox = new HBox(50);
+        tenantBox.setFillHeight(false);
+        tenantBox.setPadding(new Insets(100, 5, 5, 50));
+        tenantBox.getChildren().addAll(tenantLabel,prb1,prb2);
 
 //        Create form to fill property info
         GridPane grid = new GridPane();
@@ -74,14 +78,18 @@ public class TenantViewFX extends Tenant {
 
         grid.setPadding(new Insets(25, 125, 25, 25));
 //        grid.setPadding(new Insets(25, 25, 25, 25));
-        tenantGroup.getChildren().addAll(propBox);
+        tenantGroup.getChildren().addAll(tenantBox);
         base.getChildren().add(tenantGroup);
 
+
         prb1.setOnAction(e -> {
+
+
             GridPane grid1 = new GridPane();
             grid1.setAlignment(Pos.CENTER_LEFT);
             grid1.setHgap(10);
             grid1.setVgap(10);
+            grid1.setPadding(new Insets(25, 125, 25, 25));
 
             isCurrentTenant = true;
 
@@ -133,13 +141,17 @@ public class TenantViewFX extends Tenant {
                 TenantController tc = new TenantController();
                 tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingTenantID, apartmentNum);
 
+                base.getChildren().add(adminBox);
+                base.getChildren().remove(tenantGroup);
                 //Call lease input only when a current tenant is being inputted
-                lvfx.LeaseInput(stage);
+                lvfx.LeaseInput();
 
             });
 
+
+
             // create a new scene with the grid pane
-            Scene scene = new Scene(grid1, 300, 200);
+            Scene scene = new Scene(grid1, 800, 800);
 
             // show the new scene
             stage.setScene(scene);
@@ -148,6 +160,79 @@ public class TenantViewFX extends Tenant {
 
         });
 
+//        Create form to fill property info
+
+        GridPane grid2 = new GridPane();
+        grid.setAlignment(Pos.CENTER_LEFT);
+        grid.setHgap(10);
+        grid.setVgap(10);
+
+        grid2.setPadding(new Insets(25, 125, 25, 25));
+        prb2.setOnAction(e -> {
+
+            isCurrentTenant = false;
+
+            Label firstNameLabel = new Label("Tenant First Name: ");
+            TextField firstNameTextField = new TextField();
+
+            Label lastNameLabel = new Label("Tenant Last Name: ");
+            TextField lastNameTextField = new TextField();
+
+            Label emailLabel = new Label("email address: ");
+            TextField emailTextField = new TextField();
+
+            Label buildingLabel = new Label("Input the building ID the potential tenant is interested in: ");
+            TextField buildingTextField = new TextField();
+
+            Label unitLabel = new Label("Input unit number tenant is interested in: ");
+            TextField unitTextField = new TextField();
+
+            // add the labels and text fields to the grid pane
+            grid2.add(firstNameLabel, 0, 0);
+            grid2.add(firstNameTextField, 1, 0);
+            grid2.add(lastNameLabel, 0, 1);
+            grid2.add(lastNameTextField, 1, 1);
+            grid2.add(emailLabel, 0, 2);
+            grid2.add(emailTextField, 1, 2);
+            grid2.add(buildingLabel, 0, 3);
+            grid2.add(buildingTextField, 1, 3);
+            grid2.add(unitLabel, 0, 4);
+            grid2.add(unitTextField, 1, 4);
+
+            Button submitButton = new Button("Submit");
+
+            grid2.add(submitButton, 1,5);
+
+            submitButton.setOnAction(event -> {
+                        firstName = firstNameTextField.getText();
+                        lastName = lastNameTextField.getText();
+                        email = emailTextField.getText();
+                        buildingTenantID = Integer.parseInt(buildingTextField.getText());
+                        apartmentNum = Integer.parseInt(unitTextField.getText());
+
+                        //Set tenant ID
+                        tenant.setID();
+                        tenantID = tenant.getTenantID();
+                        System.out.println("This tenants ID is: " + tenant.getTenantID());
+
+                        //Add a new tenant to the array list by calling controller
+                        TenantController tc = new TenantController();
+                        tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingTenantID, apartmentNum);
+
+                        base.getChildren().add(adminBox);
+                        base.getChildren().remove(tenantGroup);
+
+                        stage.setScene(mainScene.getRoot().getScene());
+                        stage.show();
+
+                    });
+
+            Scene scene = new Scene(grid2, 800, 800);
+
+            // show the new scene
+            stage.setScene(scene);
+            stage.show();
+        });
 
     }
 
