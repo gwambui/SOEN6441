@@ -163,11 +163,11 @@ public class MainAppFx extends Application {
                             break;
                         case "4":
                             //base.getChildren().remove(adminBox);
-                            tc.DisplayCurrentTenants(tenants);
+                            tvfx.DisplayCurrentTenants(stage, tenants, true);
                             break;
                         case "5":
                             //base.getChildren().remove(adminBox);
-                            tc.DisplayPotentialTenants(tenants);
+                            tvfx.DisplayCurrentTenants(stage, tenants, false);
                             break;
                         case "6":
                             base.getChildren().remove(adminBox);

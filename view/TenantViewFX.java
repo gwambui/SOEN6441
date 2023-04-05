@@ -236,5 +236,85 @@ public class TenantViewFX extends Tenant {
 
     }
 
+    public void DisplayCurrentTenants(Stage primaryStage, ArrayList<Tenant> tenantList, boolean choice) {
+        int tenantNum = 1;
 
-}
+
+        stage.setTitle("Display Current Tenants");
+        VBox container = new VBox();
+        container.setPadding(new Insets(10));
+        container.setSpacing(10);
+
+
+        for (Tenant t:tenantList) {
+
+            //Only pull from the current tenants or potential tenants depending on whether or not they are a current tenant
+            if (t.isCurrentTenant == !choice) {
+                continue;
+            }
+
+            Label tenantLabel = new Label("Tenant number: " + tenantNum);
+            container.getChildren().add(tenantLabel);
+
+            tenantLabel.setStyle("-fx-font-weight: bold;");
+
+            // Set the font size to 20 points
+            tenantLabel.setStyle("-fx-font-size: 20pt;");
+
+            if (choice) {
+                Label tenantNameLabel = new Label("The tenant name is: " + t.getFirstName() + " " + t.getLastName());
+                container.getChildren().add(tenantNameLabel);
+                Label tenantIDLabel = new Label("Tenant ID " + t.getTenantID());
+                container.getChildren().add(tenantIDLabel);
+                Label tenantEmailLabel = new Label("The tenants email address is: " + t.getEmail());
+                container.getChildren().add(tenantEmailLabel);
+                Label buildingIDLabel = new Label("They live in building: " + t.getBuildingTenantID());
+                container.getChildren().add(buildingIDLabel);
+                Label apartmentNumLabel = new Label("They are renting unit number: " + t.getApartmentNum());
+                container.getChildren().add(apartmentNumLabel);
+                container.getChildren().add(new Label(" "));
+                tenantNum++;
+            }
+
+            else {
+                Label tenantNameLabel = new Label("The potential tenants name is: " + t.getFirstName() + " " + t.getLastName());
+                container.getChildren().add(tenantNameLabel);
+                Label tenantIDLabel = new Label("Tenant ID " + t.getTenantID());
+                container.getChildren().add(tenantIDLabel);
+                Label tenantEmailLabel = new Label("The potential tenants email address is: " + t.getEmail());
+                container.getChildren().add(tenantEmailLabel);
+                Label buildingIDLabel = new Label("They are interested in living in building ID: " + t.getBuildingTenantID());
+                container.getChildren().add(buildingIDLabel);
+                Label apartmentNumLabel = new Label("They are interested in renting unit number: " + t.getApartmentNum());
+                container.getChildren().add(apartmentNumLabel);
+                container.getChildren().add(new Label(" "));
+                tenantNum++;
+            }
+
+        }
+
+        Button backButton = new Button("Back");
+        container.getChildren().add(backButton);
+
+        backButton.setOnAction(event -> {
+            // switch back to the main menu scene
+            stage.setScene(mainScene.getRoot().getScene());
+            stage.setTitle("Main Menu");
+            stage.show();
+        });
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(container);
+
+        Scene scene = new Scene(scrollPane, 500, 250);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+    }
+
+
+
+    }
+
+
+
