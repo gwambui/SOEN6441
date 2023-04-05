@@ -128,16 +128,19 @@ public class MainAppFx extends Application {
                     if (selection.equalsIgnoreCase("admin")) {
                         base.getChildren().remove(box);
                         base.getChildren().add(adminBox);
+                        rb1.setSelected(false);
                     }else if (selection.equalsIgnoreCase("tenant")) {
                         base.getChildren().remove(box);
 //                        Add tenant functionality
                          prvfx.PayRentView(base, box);
+                        rb2.setSelected(false);
                     }else if (selection.equalsIgnoreCase("exit")) {
                         stage.close();
                         RunFx.closeProg();
                     }
 
                 }
+
             }
         });
 
@@ -154,43 +157,52 @@ public class MainAppFx extends Application {
                         case "1":
                             base.getChildren().remove(adminBox);
                             pvfx.addProperty(base);
-
+                            rba1.setSelected(false);
                             break;
                         case "2":
                             base.getChildren().remove(adminBox);
                             tvfx.TenantInput(base, adminBox);
+                            rba2.setSelected(false);
                             break;
                         case "3":
                             base.getChildren().remove(adminBox);
                             pvfx.displayProperties();
+                            rb3.setSelected(false);
                             break;
                         case "4":
                             //base.getChildren().remove(adminBox);
                             tvfx.DisplayTenants(stage, tenants, true);
+                            rba4.setSelected(false);
                             break;
                         case "5":
                             //base.getChildren().remove(adminBox);
                             tvfx.DisplayTenants(stage, tenants, false);
+                            rba5.setSelected(false);
                             break;
                         case "6":
                             base.getChildren().remove(adminBox);
                             pvfx.displayRentedUnits();
+                            rba6.setSelected(false);
                             break;
                         case "7":
                             base.getChildren().remove(adminBox);
                             pvfx.displayVacantUnits();
+                            rba7.setSelected(false);
                             break;
                         case "8":
                             //base.getChildren().remove(adminBox);
                             lvfx.DisplayAllLeases(stage, leases);
+                            rba8.setSelected(false);
                             break;
                         case "9":
                            // base.getChildren().remove(adminBox);
                             pvfx.addHistoricalProperty();
+                            rba9.setSelected(false);
                             break;
                         case "10":
                             base.getChildren().remove(adminBox);
                             base.getChildren().add(box);
+                            rba10.setSelected(false);
                             break;
                     }
 

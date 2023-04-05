@@ -50,6 +50,12 @@ public class TenantViewFX extends Tenant {
         prb1.setToggleGroup(tenantToggle);
         prb2.setToggleGroup(tenantToggle);
 
+        //Clear Buttons after being selected
+        tenantToggle.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            prb1.setSelected(false);
+            prb2.setSelected(false);
+        });
+
         //Add back button
         Button exitButton = new Button("Exit");
 
@@ -193,14 +199,15 @@ public class TenantViewFX extends Tenant {
 
         //For potential tenants
 
-        GridPane grid2 = new GridPane();
-        grid2.setAlignment(Pos.CENTER_LEFT);
-        grid2.setHgap(10);
-        grid2.setVgap(10);
 
-        grid2.setPadding(new Insets(25, 125, 25, 25));
 
         prb2.setOnAction(e -> {
+            GridPane grid2 = new GridPane();
+            grid2.setAlignment(Pos.CENTER_LEFT);
+            grid2.setHgap(10);
+            grid2.setVgap(10);
+
+            grid2.setPadding(new Insets(25, 125, 25, 25));
 
             //Potential tenant
             isCurrentTenant = false;
@@ -310,10 +317,10 @@ public class TenantViewFX extends Tenant {
                 }
             });
 
-            Scene scene = new Scene(grid2, 800, 800);
+            Scene pscene = new Scene(grid2, 800, 800);
 
             // show the new scene
-            stage.setScene(scene);
+            stage.setScene(pscene);
             stage.show();
         });
 
