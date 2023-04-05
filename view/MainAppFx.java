@@ -115,6 +115,7 @@ public class MainAppFx extends Application {
 
         TenantViewFX tvfx = new TenantViewFX(stage, scene);
         LeaseViewFX lvfx = new LeaseViewFX(stage, scene);
+        PayRentViewFX prvfx = new PayRentViewFX(stage, scene);
 
         mainToggle.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
             @Override
@@ -130,7 +131,7 @@ public class MainAppFx extends Application {
                     }else if (selection.equalsIgnoreCase("tenant")) {
                         base.getChildren().remove(box);
 //                        Add tenant functionality
-//                        prv.PayRentView();
+                         prvfx.PayRentView(base, box);
                     }else if (selection.equalsIgnoreCase("exit")) {
                         stage.close();
                         RunFx.closeProg();
@@ -163,11 +164,11 @@ public class MainAppFx extends Application {
                             break;
                         case "4":
                             //base.getChildren().remove(adminBox);
-                            tvfx.DisplayCurrentTenants(stage, tenants, true);
+                            tvfx.DisplayTenants(stage, tenants, true);
                             break;
                         case "5":
                             //base.getChildren().remove(adminBox);
-                            tvfx.DisplayCurrentTenants(stage, tenants, false);
+                            tvfx.DisplayTenants(stage, tenants, false);
                             break;
                         case "6":
                             base.getChildren().remove(adminBox);
@@ -179,7 +180,6 @@ public class MainAppFx extends Application {
                             break;
                         case "8":
                             //base.getChildren().remove(adminBox);
-                            lc.DisplayLeases(leases, tenants);
                             lvfx.DisplayAllLeases(stage, leases);
                             break;
                         case "9":
@@ -187,6 +187,8 @@ public class MainAppFx extends Application {
                             pvfx.addHistoricalProperty();
                             break;
                         case "10":
+                            base.getChildren().remove(adminBox);
+                            base.getChildren().add(box);
                             break;
                     }
 

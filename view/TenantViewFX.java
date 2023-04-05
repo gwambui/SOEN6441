@@ -236,7 +236,7 @@ public class TenantViewFX extends Tenant {
 
     }
 
-    public void DisplayCurrentTenants(Stage primaryStage, ArrayList<Tenant> tenantList, boolean choice) {
+    public void DisplayTenants(Stage primaryStage, ArrayList<Tenant> tenantList, boolean choice) {
         int tenantNum = 1;
 
 
