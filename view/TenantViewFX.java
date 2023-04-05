@@ -1,8 +1,6 @@
 package view;
-import controller.PropertyController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
+
+import controller.TenantController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -11,25 +9,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.*;
-
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Random;
+import model.Lease;
+import model.Tenant;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.function.ToDoubleBiFunction;
-
-import controller.PropertyController;
-import controller.TenantController;
-import javafx.stage.Stage;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class TenantViewFX extends Tenant {
@@ -41,9 +26,9 @@ public class TenantViewFX extends Tenant {
         this.mainScene = mainScene;
     }
 
-    public void TenantInput(Group base, VBox adminBox)  {
+    public void TenantInput(Group base, VBox adminBox) {
         Group tenantGroup = new Group();
-
+        AtomicBoolean availabilityFlag = new AtomicBoolean(false);
         this.mainScene = mainScene;
 
         Tenant tenant = new Tenant();
@@ -65,12 +50,16 @@ public class TenantViewFX extends Tenant {
         prb1.setToggleGroup(tenantToggle);
         prb2.setToggleGroup(tenantToggle);
 
+        //Add back button
+        Button exitButton = new Button("Exit");
+
         HBox tenantBox = new HBox(50);
         tenantBox.setFillHeight(false);
         tenantBox.setPadding(new Insets(100, 5, 5, 50));
-        tenantBox.getChildren().addAll(tenantLabel,prb1,prb2);
+        tenantBox.getChildren().addAll(tenantLabel, prb1, prb2, exitButton);
 
-//        Create form to fill property info
+
+//        Create form to fill tenant info
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER_LEFT);
         grid.setHgap(10);
@@ -81,9 +70,17 @@ public class TenantViewFX extends Tenant {
         tenantGroup.getChildren().addAll(tenantBox);
         base.getChildren().add(tenantGroup);
 
+        exitButton.setOnAction(e -> {
+            tenantGroup.getChildren().removeAll(tenantBox);
+            base.getChildren().remove(tenantGroup);
+            base.getChildren().add(adminBox);
+            stage.setTitle("Main Menu");
 
+        });
+
+
+        //For current tenants
         prb1.setOnAction(e -> {
-
 
             GridPane grid1 = new GridPane();
             grid1.setAlignment(Pos.CENTER_LEFT);
@@ -91,7 +88,19 @@ public class TenantViewFX extends Tenant {
             grid1.setVgap(10);
             grid1.setPadding(new Insets(25, 125, 25, 25));
 
+            //Current tenant
             isCurrentTenant = true;
+
+            //Print all labels and text fields
+
+            Label currentTenantLabel = new Label("Current Tenant: " );
+
+            currentTenantLabel.setStyle("-fx-font-weight: bold;");
+
+            // Set the font size to 20 points
+            currentTenantLabel.setStyle("-fx-font-size: 20pt;");
+
+            Label voidLabel = new Label(" ");
 
             Label firstNameLabel = new Label("Tenant First Name: ");
             TextField firstNameTextField = new TextField();
@@ -108,46 +117,68 @@ public class TenantViewFX extends Tenant {
             Label unitLabel = new Label("Input unit number tenant is renting:");
             TextField unitTextField = new TextField();
 
+            Button backButton = new Button("Back");
+
             // add the labels and text fields to the grid pane
-            grid1.add(firstNameLabel, 0, 0);
-            grid1.add(firstNameTextField, 1, 0);
-            grid1.add(lastNameLabel, 0, 1);
-            grid1.add(lastNameTextField, 1, 1);
-            grid1.add(emailLabel, 0, 2);
-            grid1.add(emailTextField, 1, 2);
-            grid1.add(buildingLabel, 0, 3);
-            grid1.add(buildingTextField, 1, 3);
-            grid1.add(unitLabel, 0, 4);
-            grid1.add(unitTextField, 1, 4);
+            grid1.add(currentTenantLabel, 0,0);
+            grid1.add(voidLabel, 0,1);
+            grid1.add(firstNameLabel, 0, 2);
+            grid1.add(firstNameTextField, 1, 2);
+            grid1.add(lastNameLabel, 0, 3);
+            grid1.add(lastNameTextField, 1, 3);
+            grid1.add(emailLabel, 0, 4);
+            grid1.add(emailTextField, 1, 4);
+            grid1.add(buildingLabel, 0, 5);
+            grid1.add(buildingTextField, 1, 5);
+            grid1.add(unitLabel, 0, 6);
+            grid1.add(unitTextField, 1, 6);
+            grid1.add(backButton, 0, 7);
 
             Button submitButton = new Button("Submit");
 
-            grid1.add(submitButton, 1,5);
+            grid1.add(submitButton, 1, 7);
+
+            backButton.setOnAction(event -> {
+
+                stage.setScene(mainScene);
+                stage.show();
+            });
 
             submitButton.setOnAction(event -> {
 
-              firstName = firstNameTextField.getText();
-              lastName = lastNameTextField.getText();
-              email = emailTextField.getText();
-              buildingTenantID =  Integer.parseInt(buildingTextField.getText());
-              apartmentNum = Integer.parseInt(unitTextField.getText());
+                firstName = firstNameTextField.getText();
+                lastName = lastNameTextField.getText();
+                email = emailTextField.getText();
+                buildingTenantID = Integer.parseInt(buildingTextField.getText());
+                apartmentNum = Integer.parseInt(unitTextField.getText());
 
-                //Set tenant ID
-                tenant.setID();
-                tenantID = tenant.getTenantID();
-                System.out.println("This tenants ID is: " + tenant.getTenantID());
+                //Error handling checks to ensure building ID and apartment number exist and are available before storing information
+                if (!pv.checkID(buildingTenantID)) {
+                    showError("The inputted building ID does not match any building ID in the system. Please try again.");
+                } else if ((pv.checkCondoNo(buildingTenantID, apartmentNum) == false) && pv.isCondo(buildingTenantID) && pv.checkCondoAvailability(buildingTenantID, apartmentNum)) {
+                    showError("The inputted unit number does not match any unit number for this building or is not available. Please try again.");
+                } else if (pv.checkApartmentNo(buildingTenantID, apartmentNum) == false && !pv.isCondo(buildingTenantID) && pv.checkApartmentAvailability(buildingTenantID, apartmentNum)) {
+                    showError("The inputted unit number does not match any unit number for this building or is not available. Please try again.");
+                }
 
-                //Add a new tenant to the array list by calling controller
-                TenantController tc = new TenantController();
-                tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingTenantID, apartmentNum);
+                //If all checks pass, set tenant ID, store information in model and move to lease input page
+                else {
+                    //Set tenant ID
+                    tenant.setID();
+                    tenantID = tenant.getTenantID();
+                    System.out.println("This tenants ID is: " + tenant.getTenantID());
 
-                base.getChildren().add(adminBox);
-                base.getChildren().remove(tenantGroup);
-                //Call lease input only when a current tenant is being inputted
-                lvfx.LeaseInput();
+                    //Add a new tenant to the array list by calling controller
+                    TenantController tc = new TenantController();
+                    tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingTenantID, apartmentNum);
+
+                    base.getChildren().add(adminBox);
+                    base.getChildren().remove(tenantGroup);
+                    //Call lease input only when a current tenant is being inputted
+                    lvfx.LeaseInput();
+                }
 
             });
-
 
 
             // create a new scene with the grid pane
@@ -160,18 +191,30 @@ public class TenantViewFX extends Tenant {
 
         });
 
-//        Create form to fill property info
+        //For potential tenants
 
         GridPane grid2 = new GridPane();
-        grid.setAlignment(Pos.CENTER_LEFT);
-        grid.setHgap(10);
-        grid.setVgap(10);
+        grid2.setAlignment(Pos.CENTER_LEFT);
+        grid2.setHgap(10);
+        grid2.setVgap(10);
 
         grid2.setPadding(new Insets(25, 125, 25, 25));
+
         prb2.setOnAction(e -> {
 
+            //Potential tenant
             isCurrentTenant = false;
 
+            Label potentialTenantLabel = new Label("Potential Tenant: " );
+
+            potentialTenantLabel.setStyle("-fx-font-weight: bold;");
+
+            // Set the font size to 20 points
+            potentialTenantLabel.setStyle("-fx-font-size: 20pt;");
+
+            Label voidLabel = new Label(" ");
+
+            //Print all labels and text fields
             Label firstNameLabel = new Label("Tenant First Name: ");
             TextField firstNameTextField = new TextField();
 
@@ -187,45 +230,85 @@ public class TenantViewFX extends Tenant {
             Label unitLabel = new Label("Input unit number tenant is interested in: ");
             TextField unitTextField = new TextField();
 
+            Button backButton = new Button("Back");
+
             // add the labels and text fields to the grid pane
-            grid2.add(firstNameLabel, 0, 0);
-            grid2.add(firstNameTextField, 1, 0);
-            grid2.add(lastNameLabel, 0, 1);
-            grid2.add(lastNameTextField, 1, 1);
-            grid2.add(emailLabel, 0, 2);
-            grid2.add(emailTextField, 1, 2);
-            grid2.add(buildingLabel, 0, 3);
-            grid2.add(buildingTextField, 1, 3);
-            grid2.add(unitLabel, 0, 4);
-            grid2.add(unitTextField, 1, 4);
+            grid2.add(potentialTenantLabel, 0,0);
+            grid2.add(voidLabel,0,1);
+            grid2.add(firstNameLabel, 0, 2);
+            grid2.add(firstNameTextField, 1, 2);
+            grid2.add(lastNameLabel, 0, 3);
+            grid2.add(lastNameTextField, 1, 3);
+            grid2.add(emailLabel, 0, 4);
+            grid2.add(emailTextField, 1, 4);
+            grid2.add(buildingLabel, 0, 5);
+            grid2.add(buildingTextField, 1, 5);
+            grid2.add(unitLabel, 0, 6);
+            grid2.add(unitTextField, 1, 6);
+            grid2.add(backButton, 0, 7);
 
+            //Add submit button
             Button submitButton = new Button("Submit");
+            grid2.add(submitButton, 1, 7);
 
-            grid2.add(submitButton, 1,5);
+            backButton.setOnAction(event -> {
+                stage.setScene(mainScene);
+                stage.show();
+            });
+
 
             submitButton.setOnAction(event -> {
-                        firstName = firstNameTextField.getText();
-                        lastName = lastNameTextField.getText();
-                        email = emailTextField.getText();
-                        buildingTenantID = Integer.parseInt(buildingTextField.getText());
-                        apartmentNum = Integer.parseInt(unitTextField.getText());
 
-                        //Set tenant ID
-                        tenant.setID();
-                        tenantID = tenant.getTenantID();
-                        System.out.println("This tenants ID is: " + tenant.getTenantID());
+                //Error handling to ensure user is inputting correct building ID and apartment number
+                if (!pv.checkID(buildingTenantID)) {
+                    showError("The inputted building ID does not match any building ID in the system. Please try again.");
+                } else if (pv.checkCondoNo(buildingTenantID, apartmentNum) == false && pv.isCondo(buildingTenantID) && pv.checkCondoAvailability(buildingTenantID, apartmentNum)) {
+                    showError("The inputted unit number does not match any unit number for this building or is not available. Please try again.");
+                } else if (pv.checkApartmentNo(buildingTenantID, apartmentNum) == false && !pv.isCondo(buildingTenantID) && pv.checkApartmentAvailability(buildingTenantID, apartmentNum)) {
+                    showError("The inputted unit number does not match any unit number for this building or is not available. Please try again.");
+                }
 
-                        //Add a new tenant to the array list by calling controller
-                        TenantController tc = new TenantController();
-                        tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingTenantID, apartmentNum);
+                //If all checks pass,
+                else {
+                    //Assign all variables to text field inpits
+                    firstName = firstNameTextField.getText();
+                    lastName = lastNameTextField.getText();
+                    email = emailTextField.getText();
+                    buildingTenantID = Integer.parseInt(buildingTextField.getText());
+                    apartmentNum = Integer.parseInt(unitTextField.getText());
 
-                        base.getChildren().add(adminBox);
-                        base.getChildren().remove(tenantGroup);
+                    //Set tenant ID
+                    tenant.setID();
+                    tenantID = tenant.getTenantID();
 
-                        stage.setScene(mainScene.getRoot().getScene());
-                        stage.show();
+                    //Check if apartment or condo is available and print a message to the user
+                    if (pv.isCondo(buildingTenantID)) {
+                        availabilityFlag.set(pv.checkCondoAvailability(buildingTenantID, apartmentNum));
+                    } else {
+                        availabilityFlag.set(pv.checkApartmentAvailability(buildingTenantID, apartmentNum));
+                    }
 
-                    });
+                    //Print out correct availability message
+                    if (availabilityFlag.get()) {
+                        showSuccessMessage("NOTE: This apartment is currently AVAILABLE");
+                    } else {
+                        showSuccessMessage("NOTE: This apartment is currently UNAVAILABLE");
+                    }
+
+
+                    //Add a new tenant to the array list by calling controller
+                    TenantController tc = new TenantController();
+                    tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingTenantID, apartmentNum);
+
+                    //Scene handling
+                    base.getChildren().add(adminBox);
+                    base.getChildren().remove(tenantGroup);
+
+                    //Set scene
+                    stage.setScene(mainScene.getRoot().getScene());
+                    stage.show();
+                }
+            });
 
             Scene scene = new Scene(grid2, 800, 800);
 
@@ -236,15 +319,21 @@ public class TenantViewFX extends Tenant {
 
     }
 
+    //Method for displaying current or potential tenants depending on choice (if true show current tenants, if false show potential tenants)
     public void DisplayTenants(Stage primaryStage, ArrayList<Tenant> tenantList, boolean choice) {
         int tenantNum = 1;
 
+        if (choice) {
+            stage.setTitle("Display Current Tenants");
+        }
 
-        stage.setTitle("Display Current Tenants");
+        else {
+            stage.setTitle("Display Potential Tenants");
+        }
         VBox container = new VBox();
-        container.setPadding(new Insets(10));
         container.setSpacing(10);
-
+        container.setAlignment(Pos.CENTER_LEFT);
+        container.setPadding(new Insets(25, 125, 25, 25));
 
         for (Tenant t:tenantList) {
 
@@ -262,13 +351,15 @@ public class TenantViewFX extends Tenant {
             tenantLabel.setStyle("-fx-font-size: 20pt;");
 
             if (choice) {
+                //Print all correct labels and text fields
+
                 Label tenantNameLabel = new Label("The tenant name is: " + t.getFirstName() + " " + t.getLastName());
                 container.getChildren().add(tenantNameLabel);
-                Label tenantIDLabel = new Label("Tenant ID " + t.getTenantID());
+                Label tenantIDLabel = new Label("Tenant ID: " + t.getTenantID());
                 container.getChildren().add(tenantIDLabel);
                 Label tenantEmailLabel = new Label("The tenants email address is: " + t.getEmail());
                 container.getChildren().add(tenantEmailLabel);
-                Label buildingIDLabel = new Label("They live in building: " + t.getBuildingTenantID());
+                Label buildingIDLabel = new Label("They live in building ID: " + t.getBuildingTenantID());
                 container.getChildren().add(buildingIDLabel);
                 Label apartmentNumLabel = new Label("They are renting unit number: " + t.getApartmentNum());
                 container.getChildren().add(apartmentNumLabel);
@@ -277,6 +368,9 @@ public class TenantViewFX extends Tenant {
             }
 
             else {
+
+                //Print all correct labels and text fields
+
                 Label tenantNameLabel = new Label("The potential tenants name is: " + t.getFirstName() + " " + t.getLastName());
                 container.getChildren().add(tenantNameLabel);
                 Label tenantIDLabel = new Label("Tenant ID " + t.getTenantID());
@@ -293,6 +387,7 @@ public class TenantViewFX extends Tenant {
 
         }
 
+        //Add back button
         Button backButton = new Button("Back");
         container.getChildren().add(backButton);
 
@@ -303,18 +398,38 @@ public class TenantViewFX extends Tenant {
             stage.show();
         });
 
+        //Add scroll pane
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(container);
 
-        Scene scene = new Scene(scrollPane, 500, 250);
+        //Set scene
+        Scene scene = new Scene(scrollPane, 800, 800);
         primaryStage.setScene(scene);
         primaryStage.show();
 
     }
 
-
-
+    // Method to show an error message
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
+    //Method to show a success message
+    public void showSuccessMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
+
+
+}
 
 
 

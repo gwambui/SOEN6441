@@ -81,6 +81,7 @@ public class PayRentViewFX {
         cancelButton.setOnAction(e -> {
           stage.setScene(mainScene);
           stage.show();
+          stage.setTitle("Main Menu");
           base.getChildren().add(adminBox);
 
         });
@@ -114,7 +115,7 @@ public class PayRentViewFX {
 
                 rentAmount.set(lc.getRentAmount(leases, tenants, inputtedID.get()));
 
-                Label amountLabel = new Label("The amount of rent owing is: " + rentAmount +"$");
+                Label amountLabel = new Label("The amount of rent owing is: $" + rentAmount );
                 grid1.add(amountLabel, 0, 1);
 
                 Label messagePaid = new Label("Please input the amount ($) you are paying (must be paid in full): ");
@@ -142,6 +143,7 @@ public class PayRentViewFX {
                         showSuccessMessage("You have successfully paid your rent!");
                         stage.setScene(mainScene);
                         stage.show();
+                        stage.setTitle("Main Menu");
                         base.getChildren().add(adminBox);
                     } else {
                         showError("The inputted rent amount does not match the actual rent amount. Please input the correct rent amount to pay your rent.");
@@ -166,7 +168,7 @@ public class PayRentViewFX {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
+    //Method to show a success message
     public void showSuccessMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Success");

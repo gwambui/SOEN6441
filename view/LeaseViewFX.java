@@ -1,41 +1,20 @@
 package view;
+
 import controller.LeaseController;
-import controller.PropertyController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.*;
-
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Random;
+import model.Lease;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.function.ToDoubleBiFunction;
-
-import controller.PropertyController;
-import controller.TenantController;
-import javafx.stage.Stage;
-
-import javax.swing.*;
-
-import static controller.LeaseController.leases;
-import static controller.TenantController.tenants;
 
 public class LeaseViewFX {
     Lease lease ;
@@ -69,6 +48,7 @@ public class LeaseViewFX {
         grid2.setAlignment(Pos.CENTER_LEFT);
         grid2.setHgap(10);
         grid2.setVgap(10);
+        grid2.setPadding(new Insets(25, 125, 25, 25));
 
         HBox leaseBox = new HBox(50);
         leaseBox.getChildren().addAll(leaseLabel);
@@ -108,6 +88,7 @@ public class LeaseViewFX {
 
             stage.setScene(mainScene.getRoot().getScene());
             stage.show();
+            stage.setTitle("Main Menu");
 
         });
 
@@ -126,9 +107,10 @@ public class LeaseViewFX {
 
         stage.setTitle("Display All Leases");
         VBox container = new VBox();
-        container.setPadding(new Insets(10));
         container.setSpacing(10);
 
+        container.setAlignment(Pos.CENTER_LEFT);
+        container.setPadding(new Insets(25, 125, 25, 25));
 
         for (Lease l:leaseList) {
             Label leaseLabel = new Label("Lease number: " + leaseNum);
@@ -168,7 +150,7 @@ public class LeaseViewFX {
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(container);
 
-        Scene scene = new Scene(scrollPane, 500, 250);
+        Scene scene = new Scene(scrollPane, 800, 800);
         primaryStage.setScene(scene);
         primaryStage.show();
 

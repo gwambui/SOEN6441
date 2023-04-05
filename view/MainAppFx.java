@@ -141,6 +141,7 @@ public class MainAppFx extends Application {
             }
         });
 
+        PropertyView pv = new PropertyView();
         adminToggle.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
             @Override
             public void changed(ObservableValue<? extends Toggle> ov,
@@ -153,6 +154,7 @@ public class MainAppFx extends Application {
                         case "1":
                             base.getChildren().remove(adminBox);
                             pvfx.addProperty(base);
+
                             break;
                         case "2":
                             base.getChildren().remove(adminBox);
@@ -183,7 +185,7 @@ public class MainAppFx extends Application {
                             lvfx.DisplayAllLeases(stage, leases);
                             break;
                         case "9":
-                            base.getChildren().remove(adminBox);
+                           // base.getChildren().remove(adminBox);
                             pvfx.addHistoricalProperty();
                             break;
                         case "10":
@@ -204,7 +206,6 @@ public class MainAppFx extends Application {
 
 
 //        //    create property MVC
-        PropertyView pv = new PropertyView();
 //        PropertyController pc = new PropertyController(pv);
 
 
