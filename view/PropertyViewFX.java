@@ -93,8 +93,8 @@ public class PropertyViewFX {
         prb1.setUserData("house");
         prb2.setUserData("apartment");
         prb3.setUserData("condo");
-        prb4.setUserData("apartment building");
-        prb5.setUserData("condo building");
+        prb4.setUserData("aptBuilding");
+        prb5.setUserData("condoBuilding");
         prb6.setUserData("back");
 
         final ToggleGroup propToggle = new ToggleGroup();
@@ -145,7 +145,7 @@ public class PropertyViewFX {
                         prb3.setSelected(false);
                         apartmentCondoform(selection,grid,propertyGroup,base,adminBox);
 
-                    }else if (selection.equalsIgnoreCase("apartment building")|| selection.equalsIgnoreCase("condo building")) {
+                    }else if (selection.equalsIgnoreCase("aptBuilding")|| selection.equalsIgnoreCase("condoBuilding")) {
                         base.getChildren().remove(adminBox);
                         propertyGroup.getChildren().remove(propBox);
                         prb4.setSelected(false);
@@ -357,6 +357,8 @@ public class PropertyViewFX {
     public void buildingForm(String type,GridPane grid,Group pGroup,Group base,VBox adminBox){
         id = (int)Math.floor(Math.random() * (10000 - 999 + 1) + 999);
         Text scenetitle = new Text("To add an apartment or condo bulding, please provide the following details");
+        scenetitle.setX(100);
+        scenetitle.setY(100);
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
@@ -390,7 +392,7 @@ public class PropertyViewFX {
         TextField unitCount = new TextField();
         grid.add(unitCount, 1, 9);
 
-        Label bldNameLabel = new Label("Enter the number of units in the building");
+        Label bldNameLabel = new Label("Enter the Building name");
         grid.add(bldNameLabel, 0, 10);
 
         TextField buildName = new TextField();
@@ -426,7 +428,8 @@ public class PropertyViewFX {
 
 //                TODO
 //                PASS THIS ACTION TO ANOTHER THREAD
-                 pc.addNewBuilding(type, id, street, city, postalCode, streetNumber, numberofUnits, buildingName);
+                pc.addNewBuilding(type, id, street, city, postalCode, streetNumber, numberofUnits, buildingName);
+
                 pGroup.getChildren().remove(grid);
                 base.getChildren().remove(pGroup);
                 base.getChildren().add(adminBox);
