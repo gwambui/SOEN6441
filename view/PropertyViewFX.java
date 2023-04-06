@@ -335,7 +335,7 @@ public class PropertyViewFX {
                 Integer sqfootage = Integer.parseInt(squareFootage.getText());
 //                TODO
 //                PASS THIS ACTION TO ANOTHER THREAD
-//                pc.addNewSd(type, id, buildingName, avail, bedrooms, bathrooms, unitNumber, sqfootage);
+                pc.addNewSd(type, id, buildingName, avail, bedrooms, bathrooms, unitNumber, sqfootage);
                 pGroup.getChildren().remove(grid);
                 base.getChildren().remove(pGroup);
                 base.getChildren().add(adminBox);
