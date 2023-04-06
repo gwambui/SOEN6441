@@ -118,13 +118,17 @@ public class MainAppFx extends Application {
             public void changed(ObservableValue<? extends Toggle> ov,
                                 Toggle old_toggle, Toggle new_toggle) {
                 RadioButton rb = (RadioButton)mainToggle.getSelectedToggle();
+                base.getChildren().remove(adminBox);
                 if (rb != null) {
                     String selection = mainToggle.getSelectedToggle().getUserData().toString();
                     l2.setText(selection + " selected");
                     if (selection.equalsIgnoreCase("admin")) {
+
+                        rb1.setSelected(false);
                         base.getChildren().remove(box);
                         base.getChildren().add(adminBox);
                     }else if (selection.equalsIgnoreCase("tenant")) {
+                        rb2.setSelected(false);
                         base.getChildren().remove(box);
 //                        Add tenant functionality
 //                        prv.PayRentView();
@@ -148,15 +152,17 @@ public class MainAppFx extends Application {
                     switch (selection){
                         case "1":
                             base.getChildren().remove(adminBox);
-                            pvfx.addProperty(base);
+                            pvfx.addProperty(base,adminBox);
+                            rba1.setSelected(false);
                             break;
                         case "2":
                             base.getChildren().remove(adminBox);
                             tv.TenantInput();
                             break;
                         case "3":
+                            rba3.setSelected(false);
                             base.getChildren().remove(adminBox);
-                            pvfx.displayProperties();
+                            pvfx.displayProperties(base,adminBox);
                             break;
                         case "4":
                             base.getChildren().remove(adminBox);
@@ -167,26 +173,37 @@ public class MainAppFx extends Application {
                             tc.DisplayPotentialTenants(tenants);
                             break;
                         case "6":
+                            rba6.setSelected(false);
                             base.getChildren().remove(adminBox);
-                            pvfx.displayRentedUnits();
+                            pvfx.displayRentedUnits(base,adminBox);
                             break;
                         case "7":
+                            rba7.setSelected(false);
                             base.getChildren().remove(adminBox);
-                            pvfx.displayVacantUnits();
+                            pvfx.displayVacantUnits(base,adminBox);
                             break;
                         case "8":
+                            rba8.setSelected(false);
                             base.getChildren().remove(adminBox);
                             lc.DisplayLeases(leases, tenants);
                             break;
                         case "9":
+                            rba9.setSelected(false);
                             base.getChildren().remove(adminBox);
                             pvfx.addHistoricalProperty();
+                            base.getChildren().add(adminBox);
                             break;
                         case "10":
+                            rba10.setSelected(false);
+                            base.getChildren().remove(adminBox);
+                            base.getChildren().add(box);
                             break;
+                        default:
+                            base.getChildren().add(adminBox);
                     }
-
                 }
+//                else{ base.getChildren().add(adminBox);}
+
             }
         });
 

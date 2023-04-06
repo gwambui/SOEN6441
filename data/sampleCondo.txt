@@ -1,4 +1,4 @@
-condo,6001,Condo Tower 1,true,1,1,1001,700,Canada,
+condo,6001,Condo Tower 1,false,1,1,1001,700,Canada,
 condo,6002,Condo Tower 2,true,2,1,1002,1000,Canada,
-condo,6003,Condo Tower 3,true,3,2,1002,1300,Canada,
+condo,6003,Condo Tower 3,false,3,2,1002,1300,Canada,
 condo,6004,Condo Tower 4,true,4,2,1004,1500,Canada
