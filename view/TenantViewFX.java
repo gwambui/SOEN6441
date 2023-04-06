@@ -159,16 +159,17 @@ public class TenantViewFX extends Tenant {
                 apartmentNum = Integer.parseInt(unitTextField.getText());
 
                 //Error handling checks to ensure building ID and apartment number exist and are available before storing information
-                if (!pv.checkID(buildingTenantID)) {
-                    showError("The inputted building ID does not match any building ID in the system. Please try again.");
-                } else if ((pv.checkCondoNo(buildingTenantID, apartmentNum) == false) && pv.isCondo(buildingTenantID) && pv.checkCondoAvailability(buildingTenantID, apartmentNum)) {
-                    showError("The inputted unit number does not match any unit number for this building or is not available. Please try again.");
-                } else if (pv.checkApartmentNo(buildingTenantID, apartmentNum) == false && !pv.isCondo(buildingTenantID) && pv.checkApartmentAvailability(buildingTenantID, apartmentNum)) {
-                    showError("The inputted unit number does not match any unit number for this building or is not available. Please try again.");
-                }
+
+               // if (!pv.checkID(buildingTenantID)) {
+                    //showError("The inputted building ID does not match any building ID in the system. Please try again.");
+               // } else if ((pv.checkCondoNo(buildingTenantID, apartmentNum) == false) && pv.isCondo(buildingTenantID) && pv.checkCondoAvailability(buildingTenantID, apartmentNum)) {
+                  //  showError("The inputted unit number does not match any unit number for this condo building or is not available. Please try again.");
+               // } else if (pv.checkApartmentNo(buildingTenantID, apartmentNum) == false && !pv.isCondo(buildingTenantID) && pv.checkApartmentAvailability(buildingTenantID, apartmentNum)) {
+                  //  showError("The inputted unit number does not match any unit number for this apartment building or is not available. Please try again.");
+               // }
 
                 //If all checks pass, set tenant ID, store information in model and move to lease input page
-                else {
+               // else {
                     //Set tenant ID
                     tenant.setID();
                     tenantID = tenant.getTenantID();
@@ -182,7 +183,7 @@ public class TenantViewFX extends Tenant {
                     base.getChildren().remove(tenantGroup);
                     //Call lease input only when a current tenant is being inputted
                     lvfx.LeaseInput();
-                }
+              //  }
 
             });
 
@@ -198,8 +199,6 @@ public class TenantViewFX extends Tenant {
         });
 
         //For potential tenants
-
-
 
         prb2.setOnAction(e -> {
             GridPane grid2 = new GridPane();
@@ -267,16 +266,16 @@ public class TenantViewFX extends Tenant {
             submitButton.setOnAction(event -> {
 
                 //Error handling to ensure user is inputting correct building ID and apartment number
-                if (!pv.checkID(buildingTenantID)) {
-                    showError("The inputted building ID does not match any building ID in the system. Please try again.");
-                } else if (pv.checkCondoNo(buildingTenantID, apartmentNum) == false && pv.isCondo(buildingTenantID) && pv.checkCondoAvailability(buildingTenantID, apartmentNum)) {
-                    showError("The inputted unit number does not match any unit number for this building or is not available. Please try again.");
-                } else if (pv.checkApartmentNo(buildingTenantID, apartmentNum) == false && !pv.isCondo(buildingTenantID) && pv.checkApartmentAvailability(buildingTenantID, apartmentNum)) {
-                    showError("The inputted unit number does not match any unit number for this building or is not available. Please try again.");
-                }
+                //if (!pv.checkID(buildingTenantID)) {
+                   // showError("The inputted building ID does not match any building ID in the system. Please try again.");
+               // } else if (pv.checkCondoNo(buildingTenantID, apartmentNum) == false && pv.isCondo(buildingTenantID) && pv.checkCondoAvailability(buildingTenantID, apartmentNum)) {
+                 //   showError("The inputted unit number does not match any unit number for this condo building or is not available. Please try again.");
+               // } else if (pv.checkApartmentNo(buildingTenantID, apartmentNum) == false && !pv.isCondo(buildingTenantID) && pv.checkApartmentAvailability(buildingTenantID, apartmentNum)) {
+               //     showError("The inputted unit number does not match any unit number for this apartment building or is not available. Please try again.");
+               // }
 
                 //If all checks pass,
-                else {
+               // else {
                     //Assign all variables to text field inpits
                     firstName = firstNameTextField.getText();
                     lastName = lastNameTextField.getText();
@@ -314,9 +313,10 @@ public class TenantViewFX extends Tenant {
                     //Set scene
                     stage.setScene(mainScene.getRoot().getScene());
                     stage.show();
-                }
+               // }
             });
 
+            //set new scene
             Scene pscene = new Scene(grid2, 800, 800);
 
             // show the new scene
@@ -330,6 +330,7 @@ public class TenantViewFX extends Tenant {
     public void DisplayTenants(Stage primaryStage, ArrayList<Tenant> tenantList, boolean choice) {
         int tenantNum = 1;
 
+        //Set stage title depending on choice
         if (choice) {
             stage.setTitle("Display Current Tenants");
         }
@@ -337,11 +338,14 @@ public class TenantViewFX extends Tenant {
         else {
             stage.setTitle("Display Potential Tenants");
         }
+
+        //Initialize VBox
         VBox container = new VBox();
         container.setSpacing(10);
         container.setAlignment(Pos.CENTER_LEFT);
         container.setPadding(new Insets(25, 125, 25, 25));
 
+        //Loop through tenant arrayList
         for (Tenant t:tenantList) {
 
             //Only pull from the current tenants or potential tenants depending on whether or not they are a current tenant
@@ -349,6 +353,7 @@ public class TenantViewFX extends Tenant {
                 continue;
             }
 
+            //Set label
             Label tenantLabel = new Label("Tenant number: " + tenantNum);
             container.getChildren().add(tenantLabel);
 
@@ -357,6 +362,7 @@ public class TenantViewFX extends Tenant {
             // Set the font size to 20 points
             tenantLabel.setStyle("-fx-font-size: 20pt;");
 
+            //If Current Tenant
             if (choice) {
                 //Print all correct labels and text fields
 
@@ -374,13 +380,14 @@ public class TenantViewFX extends Tenant {
                 tenantNum++;
             }
 
+            //If Potential Tenant
             else {
 
                 //Print all correct labels and text fields
 
                 Label tenantNameLabel = new Label("The potential tenants name is: " + t.getFirstName() + " " + t.getLastName());
                 container.getChildren().add(tenantNameLabel);
-                Label tenantIDLabel = new Label("Tenant ID " + t.getTenantID());
+                Label tenantIDLabel = new Label("Tenant ID: " + t.getTenantID());
                 container.getChildren().add(tenantIDLabel);
                 Label tenantEmailLabel = new Label("The potential tenants email address is: " + t.getEmail());
                 container.getChildren().add(tenantEmailLabel);

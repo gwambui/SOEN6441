@@ -17,7 +17,8 @@ import model.Lease;
 import java.util.ArrayList;
 
 public class LeaseViewFX {
-    Lease lease ;
+
+    //Initialize variables
     int leaseID;
     String leaseStartDate;
     String leaseEndDate;
@@ -26,22 +27,24 @@ public class LeaseViewFX {
     Scene mainScene;
 
 
-
+    //Lease view constructor
     public LeaseViewFX(Stage stage, Scene mainScene) {
         this.stage = stage;
         this.mainScene = mainScene;
     }
 
+    //Method to deal with lease input
     public void LeaseInput() {
         Lease lease = new Lease();
 
+        //Set stage title
         stage.setTitle("Add a Lease");
+
+        //Set lease ID
         lease.setID();
         leaseID = lease.getLeaseID();
 
-        //Display all prompts for lease input
-        System.out.println("The lease ID associated with this tenant is: " + leaseID);
-
+        //Initialize labels, grid, HBox and Text Fields required for inputting lease information
         Label leaseLabel = new Label("Please input lease information: ");
 
         GridPane grid2 = new GridPane();
@@ -76,16 +79,19 @@ public class LeaseViewFX {
 
         grid2.add(submitButton, 1,5);
 
+        //Submit button listener
         submitButton.setOnAction(e -> {
+
+            //Store information in correct variables
             leaseStartDate = startDateTextField.getText();
             leaseEndDate = endDateTextField.getText();
             monthlyRentAmount = Double.parseDouble(rentAmountTextField.getText());
 
+            //Initialize lease controller, pass information to controller to handle business logic
             LeaseController lc = new LeaseController();
             lc.addNewLease(leaseID, leaseStartDate, leaseEndDate, monthlyRentAmount, false);
 
             //new scene to reset actions
-
             stage.setScene(mainScene.getRoot().getScene());
             stage.show();
             stage.setTitle("Main Menu");
@@ -102,9 +108,11 @@ public class LeaseViewFX {
 
     }
 
+    //Method to display all leases
     public void DisplayAllLeases(Stage primaryStage, ArrayList<Lease> leaseList) {
-        int leaseNum = 1;
+        int leaseNum = 1;  //initialize lease num to be 1
 
+        //Create VBox container and stage parameters
         stage.setTitle("Display All Leases");
         VBox container = new VBox();
         container.setSpacing(10);
@@ -112,16 +120,20 @@ public class LeaseViewFX {
         container.setAlignment(Pos.CENTER_LEFT);
         container.setPadding(new Insets(25, 125, 25, 25));
 
+        //Loop through lease list to retrieve correct information and print them to GUI screen
         for (Lease l:leaseList) {
+
+            //Main label
             Label leaseLabel = new Label("Lease number: " + leaseNum);
             container.getChildren().add(leaseLabel);
 
+            //Bold title
             leaseLabel.setStyle("-fx-font-weight: bold;");
 
             // Set the font size to 20 points
             leaseLabel.setStyle("-fx-font-size: 20pt;");
 
-
+            //Print out lease information
             Label leaseIDLabel = new Label("The lease ID is: " + l.getLeaseID());
             container.getChildren().add(leaseIDLabel);
             Label leaseStartDateLabel = new Label("The lease start date is: " + l.getLeaseStartDate());
@@ -133,10 +145,12 @@ public class LeaseViewFX {
             Label hasPaidRentLabel = new Label("The monthly rent has been paid for this lease (true/false): " + l.getHasPaidRent());
             container.getChildren().add(hasPaidRentLabel);
             container.getChildren().add(new Label(" "));
+
             leaseNum ++;
 
         }
 
+        //Create back button
         Button backButton = new Button("Back");
         container.getChildren().add(backButton);
 
@@ -147,9 +161,11 @@ public class LeaseViewFX {
             stage.show();
         });
 
+        //Create scroll pane and wrap container with it
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(container);
 
+        //Set up scene and show stage
         Scene scene = new Scene(scrollPane, 800, 800);
         primaryStage.setScene(scene);
         primaryStage.show();

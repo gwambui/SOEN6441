@@ -31,10 +31,13 @@ public class PayRentViewFX {
         this.mainScene = mainScene;
     }
     public void PayRentView(Group base, VBox adminBox) {
+
+        //Initialize classes
         Tenant tenant = new Tenant();
         TenantController tc = new TenantController();
         LeaseController lc = new LeaseController();
 
+        //Initalize variables (atomic)
         AtomicInteger inputtedID = new AtomicInteger();
         AtomicReference<Double> rentAmount = new AtomicReference<>((double) 0);
         AtomicReference<Double> amountPaying = new AtomicReference<>((double) 0);
@@ -77,7 +80,7 @@ public class PayRentViewFX {
         grid.add(cancelBox, 0, 4);
 
 
-
+        //Go back to main menu on cancel
         cancelButton.setOnAction(e -> {
           stage.setScene(mainScene);
           stage.show();
@@ -86,19 +89,24 @@ public class PayRentViewFX {
 
         });
 
+
         submitButton.setOnAction(e -> {
 
             inputtedID.set(Integer.parseInt(usernameTextField.getText()));
 
+            //Check if tenant ID exists before moving to next scene
             if (!tc.checkTenantID(tenants, inputtedID.get())) {
                 showError("The Tenant ID does not exist, please try again.");
             }
 
+            //If tenant has already paid rent, do not allow them to double pay, block access to pay rent page and display message
             if (tc.checkTenantID(tenants, inputtedID.get()) && lc.checkIfPaid(leases, tenants, inputtedID.get())) {
                 showError("The rent has already been paid for this tenant for this month.");
             }
 
+            //If tenant ID exists and they havent already paid rent, display correct rent paying page
             if (tc.checkTenantID(tenants, inputtedID.get()) && !lc.checkIfPaid(leases, tenants, inputtedID.get())) {
+
                 // Create a grid pane for the login form
                 GridPane grid1 = new GridPane();
                 grid1.setAlignment(Pos.CENTER);
@@ -110,11 +118,12 @@ public class PayRentViewFX {
 
                 // Add a title to the form
                 Label title1 = new Label("Pay Rent");
-                title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+                title1.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
                 grid1.add(title1, 0, 0, 2, 1);
 
                 rentAmount.set(lc.getRentAmount(leases, tenants, inputtedID.get()));
 
+                //Set up scene
                 Label amountLabel = new Label("The amount of rent owing is: $" + rentAmount );
                 grid1.add(amountLabel, 0, 1);
 
@@ -125,26 +134,42 @@ public class PayRentViewFX {
                 grid1.add(amountPaidText, 1, 2);
 
                 Button submitButton2 = new Button("Submit");
+                Button exitButton = new Button("Exit");
                 HBox submitBox2 = new HBox(10);
                 submitBox2.setAlignment(Pos.BOTTOM_RIGHT);
                 submitBox2.getChildren().add(submitButton2);
                 grid1.add(submitBox2, 1, 4);
+                grid1.add(exitButton, 0,4);
 
+                //Display scene
                 Scene paidScene = new Scene(grid1, 800, 800);
                 stage.setScene(paidScene);
                 stage.show();
 
-                submitButton2.setOnAction(event-> {
-                    amountPaying.set(Double.parseDouble(amountPaidText.getText()));
+                //Go back to main menu if exit is clicked
+                exitButton.setOnAction(event -> {
+                   stage.setScene(mainScene);
+                   base.getChildren().add(adminBox);
+                   stage.show();
+                   stage.setTitle("Main Menu");
+                });
 
+                //Handle submit action
+                submitButton2.setOnAction(event-> {
+
+                    //store inputted variable
+                    amountPaying.set(Double.parseDouble(amountPaidText.getText()));
+                    //Controller will pay rent if rent amount = amount paying
                     result.set(lc.payRent(leases, inputtedID.get(), tenants, rentAmount.get(), amountPaying.get()));
 
+                    //If user inputted correct amount, show success message and return to main menu, else show error message
                     if (result.get()) {
                         showSuccessMessage("You have successfully paid your rent!");
                         stage.setScene(mainScene);
                         stage.show();
                         stage.setTitle("Main Menu");
                         base.getChildren().add(adminBox);
+
                     } else {
                         showError("The inputted rent amount does not match the actual rent amount. Please input the correct rent amount to pay your rent.");
                     }
@@ -153,7 +178,7 @@ public class PayRentViewFX {
             }
         });
 
-
+        //Show scene
         Scene scene = new Scene(grid, 800, 800);
         stage.setScene(scene);
         stage.show();
