@@ -177,6 +177,7 @@ public class MainAppFx extends Application {
 
                                     //Start new property thread
                                     thread = new Thread(pvfx);
+
                                 }
 
                                 //Start thread

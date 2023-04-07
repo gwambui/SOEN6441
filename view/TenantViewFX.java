@@ -311,23 +311,25 @@ public class TenantViewFX extends Tenant {
 
             submitButton.setOnAction(event -> {
 
+                firstName = firstNameTextField.getText();
+                lastName = lastNameTextField.getText();
+                email = emailTextField.getText();
+                buildingTenantID = Integer.parseInt(buildingTextField.getText());
+                apartmentNum = Integer.parseInt(unitTextField.getText());
+
+                //Error handling to ensure building ID and apartment number exist and are available before storing information
+
                 if (!pv.checkID(buildingTenantID)) {
                     showError("The inputted building ID does not match any building ID in the system. Please try again.");
                 }
 
-                else if (pv.isCondo(buildingTenantID)) {
+                 else if (pv.isCondo(buildingTenantID)) {
 
                     if ((pv.checkCondoNo(buildingTenantID, apartmentNum) == false)) {
                         showError("The inputted unit number does not match any unit number for this condo building or is not available. Please try again.");
                     }
 
                         else {
-                            //Assign all variables to text field inpits
-                            firstName = firstNameTextField.getText();
-                            lastName = lastNameTextField.getText();
-                            email = emailTextField.getText();
-                            buildingTenantID = Integer.parseInt(buildingTextField.getText());
-                            apartmentNum = Integer.parseInt(unitTextField.getText());
 
                             //Set tenant ID
                             tenant.setID();
@@ -369,12 +371,6 @@ public class TenantViewFX extends Tenant {
                         showError("The inputted unit number does not match any unit number for this apartment building or is not available. Please try again.");
                     }
                         else {
-                            //Assign all variables to text field inpits
-                            firstName = firstNameTextField.getText();
-                            lastName = lastNameTextField.getText();
-                            email = emailTextField.getText();
-                            buildingTenantID = Integer.parseInt(buildingTextField.getText());
-                            apartmentNum = Integer.parseInt(unitTextField.getText());
 
                             //Set tenant ID
                             tenant.setID();

@@ -767,6 +767,7 @@ public class PropertyViewFX  implements Runnable {
         return out;
     }
 
+    //Override run method
     public void run () {
         System.out.println("Property Thread started");
         iterateProperties();
