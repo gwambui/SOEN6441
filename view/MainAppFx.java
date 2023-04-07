@@ -7,6 +7,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
@@ -167,8 +168,21 @@ public class MainAppFx extends Application {
                             break;
                         case "3":
                             base.getChildren().remove(adminBox);
+
+                            //Start thread for display properties
                             pvfx.start();
-                            rb3.setSelected(false);
+
+                            //call join() to ensure propertyPane gets allocated before moving to next instruction
+                            try {
+                                pvfx.join();
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            //Call GUI thread to display properties to screen
+                            pvfx.displayProperties(base, adminBox, pvfx.propertyPane);
+
+                            rba3.setSelected(false);
                             break;
                         case "4":
                             //base.getChildren().remove(adminBox);

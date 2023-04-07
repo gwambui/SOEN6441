@@ -58,6 +58,8 @@ public class PropertyViewFX extends Thread {
     //for multiplexes
     int numberofUnits;
     String buildingName;
+
+    public GridPane propertyPane;
 //    String country;
 
     public void printPropertyDetails(ArrayList<SingleDwelling> singleDwelling) {
@@ -541,9 +543,8 @@ public class PropertyViewFX extends Thread {
 
     }
 
-    public void displayProperties(Group base, VBox adminBox) {
-        int i= 2;
-        GridPane pane = new GridPane();
+    public void displayProperties(Group base, VBox adminBox, GridPane pane) {
+
         pane.setAlignment(Pos.CENTER);
         pane.setHgap(10);
         pane.setVgap(10);
@@ -559,13 +560,6 @@ public class PropertyViewFX extends Thread {
         hbox.getChildren().add(back);
         pane.add(hbox, 0, 0,2, 1);
 
-        for (Property p : pc.getProperties()){
-
-            i+=1;
-            Text propertyInfo = new Text(p.toString());
-            pane.add(propertyInfo, 1, i);
-
-        }
 
         base.getChildren().add(pane);
 
@@ -578,6 +572,21 @@ public class PropertyViewFX extends Thread {
                 base.getChildren().add(adminBox);
             }
         });
+    }
+
+    public void iterateProperties() {
+
+        propertyPane = new GridPane();
+        int i = 2;
+
+        for (Property p : pc.getProperties()){
+
+            i+=1;
+            Text propertyInfo = new Text(p.toString());
+            propertyPane.add(propertyInfo, 1, i);
+
+        }
+
     }
 
     public void displayRentedUnits(Group base, VBox adminBox) {
@@ -758,7 +767,7 @@ public class PropertyViewFX extends Thread {
     }
 
     public void run () {
-        displayProperties(base, adminBox);
+        iterateProperties();
     }
 
 
