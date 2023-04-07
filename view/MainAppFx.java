@@ -30,7 +30,7 @@ public class MainAppFx extends Application {
         TenantController tc = new TenantController();
         LeaseController lc = new LeaseController();
         PayRentView prv = new PayRentView();
-        PropertyViewFX pvfx = new PropertyViewFX(stage);
+
 
         //Setting title to the Stage
         stage.setTitle("Main Menu");
@@ -144,6 +144,7 @@ public class MainAppFx extends Application {
             }
         });
 
+        PropertyViewFX pvfx = new PropertyViewFX(stage, base, adminBox);
         PropertyView pv = new PropertyView();
         adminToggle.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
             @Override
@@ -156,7 +157,7 @@ public class MainAppFx extends Application {
                     switch (selection){
                         case "1":
                             base.getChildren().remove(adminBox);
-                            pvfx.addProperty(base);
+                            pvfx.addProperty(base, adminBox);
                             rba1.setSelected(false);
                             break;
                         case "2":
@@ -166,7 +167,7 @@ public class MainAppFx extends Application {
                             break;
                         case "3":
                             base.getChildren().remove(adminBox);
-                            pvfx.displayProperties();
+                            pvfx.start();
                             rb3.setSelected(false);
                             break;
                         case "4":
@@ -181,12 +182,12 @@ public class MainAppFx extends Application {
                             break;
                         case "6":
                             base.getChildren().remove(adminBox);
-                            pvfx.displayRentedUnits();
+                            pvfx.displayRentedUnits(base, adminBox);
                             rba6.setSelected(false);
                             break;
                         case "7":
                             base.getChildren().remove(adminBox);
-                            pvfx.displayVacantUnits();
+                            pvfx.displayVacantUnits(base, adminBox);
                             rba7.setSelected(false);
                             break;
                         case "8":

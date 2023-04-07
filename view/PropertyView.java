@@ -254,7 +254,7 @@ public class PropertyView {
             }
         }
     }
-
+    //Method used to change availability flag
     public void changeAvailableFlag(int buildingID, int unitNum) {
 
         for (Property p : pc.getProperties()) {
@@ -279,6 +279,7 @@ public class PropertyView {
         }
     }
 
+    //Method to check ID
     public boolean checkID(int buildingID) {
         boolean out = false;
 
@@ -290,6 +291,7 @@ public class PropertyView {
         return out;
     }
 
+    //Method to check apartment number, returns true if apartment number exists in building
     public boolean checkApartmentNo(int buildingID, int apartmentNum) {
         boolean out = false;
 
@@ -335,7 +337,7 @@ public class PropertyView {
         for (Property p : pc. getProperties()) {
             if (p.getBuildingId() == buildingID) {
                 Condo c = (Condo) p;
-                if (c.getCondoNumber() == unitNumber && p.isAvailable()) {
+                if (c.getCondoNumber() == unitNumber && c.isAvailable()) {
                     out = true;
                 }
             }

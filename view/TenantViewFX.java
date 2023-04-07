@@ -31,6 +31,8 @@ public class TenantViewFX extends Tenant {
         AtomicBoolean availabilityFlag = new AtomicBoolean(false);
         this.mainScene = mainScene;
 
+        boolean lock = false;
+
         Tenant tenant = new Tenant();
         Lease lease = new Lease();
         LeaseView lv = new LeaseView();
@@ -160,30 +162,74 @@ public class TenantViewFX extends Tenant {
 
                 //Error handling checks to ensure building ID and apartment number exist and are available before storing information
 
-               // if (!pv.checkID(buildingTenantID)) {
-                    //showError("The inputted building ID does not match any building ID in the system. Please try again.");
-               // } else if ((pv.checkCondoNo(buildingTenantID, apartmentNum) == false) && pv.isCondo(buildingTenantID) && pv.checkCondoAvailability(buildingTenantID, apartmentNum)) {
-                  //  showError("The inputted unit number does not match any unit number for this condo building or is not available. Please try again.");
-               // } else if (pv.checkApartmentNo(buildingTenantID, apartmentNum) == false && !pv.isCondo(buildingTenantID) && pv.checkApartmentAvailability(buildingTenantID, apartmentNum)) {
-                  //  showError("The inputted unit number does not match any unit number for this apartment building or is not available. Please try again.");
-               // }
+                if (!pv.checkID(buildingTenantID)) {
+                    showError("The inputted building ID does not match any building ID in the system. Please try again.");
+                }
 
-                //If all checks pass, set tenant ID, store information in model and move to lease input page
-               // else {
-                    //Set tenant ID
-                    tenant.setID();
-                    tenantID = tenant.getTenantID();
-                    System.out.println("This tenants ID is: " + tenant.getTenantID());
+                  else if (pv.isCondo(buildingTenantID)) {
 
-                    //Add a new tenant to the array list by calling controller
-                    TenantController tc = new TenantController();
-                    tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingTenantID, apartmentNum);
+                        if ((pv.checkCondoNo(buildingTenantID, apartmentNum) == false)) {
+                            showError("The inputted unit number does not match any unit number for this condo building or is not available. Please try again.");
+                        }
+                        else {
 
-                    base.getChildren().add(adminBox);
-                    base.getChildren().remove(tenantGroup);
-                    //Call lease input only when a current tenant is being inputted
-                    lvfx.LeaseInput();
-              //  }
+                            if (!pv.checkCondoAvailability(buildingTenantID, apartmentNum)) {
+                                showError("This apartment unit number is currently occupied by another tenant");
+                            }
+
+                            else {
+                                //If all checks pass, set tenant ID, store information in model and move to lease input page
+                                //Set tenant ID
+                                tenant.setID();
+                                tenantID = tenant.getTenantID();
+                                System.out.println("This tenants ID is: " + tenant.getTenantID());
+                                pv.changeAvailableFlag(buildingTenantID, apartmentNum);
+
+                                //Add a new tenant to the array list by calling controller
+                                TenantController tc = new TenantController();
+                                tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingTenantID, apartmentNum);
+
+                                base.getChildren().add(adminBox);
+                                base.getChildren().remove(tenantGroup);
+                                //Call lease input only when a current tenant is being inputted
+                                lvfx.LeaseInput();
+                            }
+                        }
+                    }
+
+                  //If the unit is a condo
+                  else if (!pv.isCondo(buildingTenantID)) {
+                    //Check if apartment number exists
+                    if (!pv.checkApartmentNo(buildingTenantID, apartmentNum)) {
+                        showError("The inputted unit number does not match any unit number for this apartment building or is not available. Please try again.");
+                    }
+
+                    else {
+                        //Check if unit is available
+                        if (!pv.checkApartmentAvailability(buildingTenantID, apartmentNum)) {
+                            showError("This apartment unit number is currently occupied by another tenant");
+                        }
+
+                        else {
+                            //If all checks pass, set tenant ID, store information in model and move to lease input page
+                            //Set tenant ID
+                            tenant.setID();
+                            tenantID = tenant.getTenantID();
+                            System.out.println("This tenants ID is: " + tenant.getTenantID());
+                            pv.changeAvailableFlag(buildingTenantID, apartmentNum);
+
+                            //Add a new tenant to the array list by calling controller
+                            TenantController tc = new TenantController();
+                            tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingTenantID, apartmentNum);
+
+                            base.getChildren().add(adminBox);
+                            base.getChildren().remove(tenantGroup);
+                            //Call lease input only when a current tenant is being inputted
+                            lvfx.LeaseInput();
+                        }
+                    }
+                }
+
 
             });
 
@@ -265,55 +311,104 @@ public class TenantViewFX extends Tenant {
 
             submitButton.setOnAction(event -> {
 
-                //Error handling to ensure user is inputting correct building ID and apartment number
-                //if (!pv.checkID(buildingTenantID)) {
-                   // showError("The inputted building ID does not match any building ID in the system. Please try again.");
-               // } else if (pv.checkCondoNo(buildingTenantID, apartmentNum) == false && pv.isCondo(buildingTenantID) && pv.checkCondoAvailability(buildingTenantID, apartmentNum)) {
-                 //   showError("The inputted unit number does not match any unit number for this condo building or is not available. Please try again.");
-               // } else if (pv.checkApartmentNo(buildingTenantID, apartmentNum) == false && !pv.isCondo(buildingTenantID) && pv.checkApartmentAvailability(buildingTenantID, apartmentNum)) {
-               //     showError("The inputted unit number does not match any unit number for this apartment building or is not available. Please try again.");
-               // }
+                if (!pv.checkID(buildingTenantID)) {
+                    showError("The inputted building ID does not match any building ID in the system. Please try again.");
+                }
 
-                //If all checks pass,
-               // else {
-                    //Assign all variables to text field inpits
-                    firstName = firstNameTextField.getText();
-                    lastName = lastNameTextField.getText();
-                    email = emailTextField.getText();
-                    buildingTenantID = Integer.parseInt(buildingTextField.getText());
-                    apartmentNum = Integer.parseInt(unitTextField.getText());
+                else if (pv.isCondo(buildingTenantID)) {
 
-                    //Set tenant ID
-                    tenant.setID();
-                    tenantID = tenant.getTenantID();
-
-                    //Check if apartment or condo is available and print a message to the user
-                    if (pv.isCondo(buildingTenantID)) {
-                        availabilityFlag.set(pv.checkCondoAvailability(buildingTenantID, apartmentNum));
-                    } else {
-                        availabilityFlag.set(pv.checkApartmentAvailability(buildingTenantID, apartmentNum));
+                    if ((pv.checkCondoNo(buildingTenantID, apartmentNum) == false)) {
+                        showError("The inputted unit number does not match any unit number for this condo building or is not available. Please try again.");
                     }
 
-                    //Print out correct availability message
-                    if (availabilityFlag.get()) {
-                        showSuccessMessage("NOTE: This apartment is currently AVAILABLE");
-                    } else {
-                        showSuccessMessage("NOTE: This apartment is currently UNAVAILABLE");
+                        else {
+                            //Assign all variables to text field inpits
+                            firstName = firstNameTextField.getText();
+                            lastName = lastNameTextField.getText();
+                            email = emailTextField.getText();
+                            buildingTenantID = Integer.parseInt(buildingTextField.getText());
+                            apartmentNum = Integer.parseInt(unitTextField.getText());
+
+                            //Set tenant ID
+                            tenant.setID();
+                            tenantID = tenant.getTenantID();
+
+                            //Check if apartment or condo is available and print a message to the user
+                            if (pv.isCondo(buildingTenantID)) {
+                                availabilityFlag.set(pv.checkCondoAvailability(buildingTenantID, apartmentNum));
+                            } else {
+                                availabilityFlag.set(pv.checkApartmentAvailability(buildingTenantID, apartmentNum));
+                            }
+
+                            //Print out correct availability message
+                            if (availabilityFlag.get()) {
+                                showSuccessMessage("NOTE: This apartment is currently AVAILABLE");
+                            } else {
+                                showSuccessMessage("NOTE: This apartment is currently UNAVAILABLE");
+                            }
+
+
+                            //Add a new tenant to the array list by calling controller
+                            TenantController tc = new TenantController();
+                            tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingTenantID, apartmentNum);
+
+                            //Scene handling
+                            base.getChildren().add(adminBox);
+                            base.getChildren().remove(tenantGroup);
+
+                            //Set scene
+                            stage.setScene(mainScene.getRoot().getScene());
+                            stage.show();
+                        }
+                }
+
+                //If the unit is a condo
+                else if (!pv.isCondo(buildingTenantID)) {
+                    //Check if apartment number exists
+                    if (!pv.checkApartmentNo(buildingTenantID, apartmentNum)) {
+                        showError("The inputted unit number does not match any unit number for this apartment building or is not available. Please try again.");
                     }
+                        else {
+                            //Assign all variables to text field inpits
+                            firstName = firstNameTextField.getText();
+                            lastName = lastNameTextField.getText();
+                            email = emailTextField.getText();
+                            buildingTenantID = Integer.parseInt(buildingTextField.getText());
+                            apartmentNum = Integer.parseInt(unitTextField.getText());
+
+                            //Set tenant ID
+                            tenant.setID();
+                            tenantID = tenant.getTenantID();
+
+                            //Check if apartment or condo is available and print a message to the user
+                            if (pv.isCondo(buildingTenantID)) {
+                                availabilityFlag.set(pv.checkCondoAvailability(buildingTenantID, apartmentNum));
+                            } else {
+                                availabilityFlag.set(pv.checkApartmentAvailability(buildingTenantID, apartmentNum));
+                            }
+
+                            //Print out correct availability message
+                            if (availabilityFlag.get()) {
+                                showSuccessMessage("NOTE: This apartment is currently AVAILABLE");
+                            } else {
+                                showSuccessMessage("NOTE: This apartment is currently UNAVAILABLE");
+                            }
 
 
-                    //Add a new tenant to the array list by calling controller
-                    TenantController tc = new TenantController();
-                    tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingTenantID, apartmentNum);
+                            //Add a new tenant to the array list by calling controller
+                            TenantController tc = new TenantController();
+                            tc.addNewTenant(isCurrentTenant, tenantID, firstName, lastName, email, buildingTenantID, apartmentNum);
 
-                    //Scene handling
-                    base.getChildren().add(adminBox);
-                    base.getChildren().remove(tenantGroup);
+                            //Scene handling
+                            base.getChildren().add(adminBox);
+                            base.getChildren().remove(tenantGroup);
 
-                    //Set scene
-                    stage.setScene(mainScene.getRoot().getScene());
-                    stage.show();
-               // }
+                            //Set scene
+                            stage.setScene(mainScene.getRoot().getScene());
+                            stage.show();
+                        }
+                }
+
             });
 
             //set new scene
