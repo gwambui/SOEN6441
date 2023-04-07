@@ -28,7 +28,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class PropertyViewFX extends Thread {
+public class PropertyViewFX  implements Runnable {
 
     public PropertyViewFX(Stage stage, Group base, VBox adminBox) {
         this.pc = new PropertyController(this);
@@ -570,6 +570,7 @@ public class PropertyViewFX extends Thread {
             public void handle(javafx.event.ActionEvent e) {
                 base.getChildren().remove(pane);
                 base.getChildren().add(adminBox);
+                propertyPane.getChildren().clear();
             }
         });
     }
@@ -767,7 +768,9 @@ public class PropertyViewFX extends Thread {
     }
 
     public void run () {
+        System.out.println("Property Thread started");
         iterateProperties();
+        System.out.println("Property Thread ended");
     }
 
 

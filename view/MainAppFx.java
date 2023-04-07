@@ -170,11 +170,22 @@ public class MainAppFx extends Application {
                             base.getChildren().remove(adminBox);
 
                             //Start thread for display properties
-                            pvfx.start();
+                                Thread thread = new Thread(pvfx);
+
+                                //Make sure thread has not already started to ensure no error due to listener operation. Thread must be in NEW state
+                                if (thread == null || thread.getState() != Thread.State.NEW) {
+
+                                    //Start new property thread
+                                    thread = new Thread(pvfx);
+                                }
+
+                                //Start thread
+                                thread.start();
 
                             //call join() to ensure propertyPane gets allocated before moving to next instruction
+
                             try {
-                                pvfx.join();
+                                thread.join();
                             } catch (InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
