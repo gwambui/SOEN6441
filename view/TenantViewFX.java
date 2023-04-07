@@ -28,7 +28,7 @@ public class TenantViewFX extends Tenant {
 
     public void TenantInput(Group base, VBox adminBox) {
         Group tenantGroup = new Group();
-        AtomicBoolean availabilityFlag = new AtomicBoolean(false);
+        AtomicBoolean availabilityFlag = new AtomicBoolean(true);
         this.mainScene = mainScene;
 
         boolean lock = false;

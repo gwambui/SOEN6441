@@ -352,7 +352,7 @@ public class PropertyView {
         for (Property p : pc. getProperties()) {
             if (p.getBuildingId() == buildingID) {
                 Apartment s = (Apartment) p;
-                if (s.getAptNumber() == unitNumber && p.isAvailable()) {
+                if (s.getAptNumber() == unitNumber && s.isAvailable()) {
                     out = true;
                 }
             }
