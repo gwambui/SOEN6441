@@ -543,6 +543,7 @@ public class PropertyViewFX  implements Runnable {
 
     }
 
+    //Method to display all properties inputted in the system
     public void displayProperties(Group base, VBox adminBox, GridPane pane) {
 
         pane.setAlignment(Pos.CENTER);
@@ -563,8 +564,6 @@ public class PropertyViewFX  implements Runnable {
 
         base.getChildren().add(pane);
 
-
-
         back.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
             @Override
             public void handle(javafx.event.ActionEvent e) {
@@ -575,6 +574,7 @@ public class PropertyViewFX  implements Runnable {
         });
     }
 
+    //Method to iterate through property list and alter propertyPane variable. Function used for Display Properties thread
     public void iterateProperties() {
 
         propertyPane = new GridPane();
@@ -590,6 +590,7 @@ public class PropertyViewFX  implements Runnable {
 
     }
 
+    //Method to display rented units
     public void displayRentedUnits(Group base, VBox adminBox) {
         int i= 2;
         GridPane pane = new GridPane();
@@ -607,6 +608,8 @@ public class PropertyViewFX  implements Runnable {
         hbox.setAlignment(Pos.TOP_CENTER);
         hbox.getChildren().add(back);
         pane.add(hbox, 0, 0,2, 1);
+
+        //Iterate through properties array list
         for (Property p : pc.getProperties()) {
             if (!(p.getType().equalsIgnoreCase("condoBuilding")) &&
                     !(p.getType().equalsIgnoreCase("aptBuilding")) &&
@@ -628,6 +631,7 @@ public class PropertyViewFX  implements Runnable {
 
 
     }
+    //Method to display vacant units
     public void displayVacantUnits(Group base, VBox adminBox) {
         int i= 2;
         GridPane pane = new GridPane();
@@ -645,6 +649,8 @@ public class PropertyViewFX  implements Runnable {
         hbox.setAlignment(Pos.TOP_CENTER);
         hbox.getChildren().add(back);
         pane.add(hbox, 0, 0,2, 1);
+
+        //Iterate through properties array list
         for (Property p : pc.getProperties()) {
             if (p.isAvailable() == true) {
                 i += 1;
@@ -663,6 +669,7 @@ public class PropertyViewFX  implements Runnable {
         });
     }
 
+    //Change availability flag given a building ID and unit number
     public void changeAvailableFlag(int buildingID, int unitNum) {
 
         for (Property p : pc.getProperties()) {
@@ -686,7 +693,7 @@ public class PropertyViewFX  implements Runnable {
             }
         }
     }
-
+    //Method to check ID
     public boolean checkID(int buildingID) {
         boolean out = false;
 
@@ -698,6 +705,7 @@ public class PropertyViewFX  implements Runnable {
         return out;
     }
 
+    //Method to check apartment number, returns true if apartment number exists in building
     public boolean checkApartmentNo(int buildingID, int apartmentNum) {
         boolean out = false;
 
@@ -743,7 +751,7 @@ public class PropertyViewFX  implements Runnable {
         for (Property p : pc. getProperties()) {
             if (p.getBuildingId() == buildingID) {
                 Condo c = (Condo) p;
-                if (c.getCondoNumber() == unitNumber && p.isAvailable()) {
+                if (c.getCondoNumber() == unitNumber && c.isAvailable()) {
                     out = true;
                 }
             }
@@ -758,7 +766,7 @@ public class PropertyViewFX  implements Runnable {
         for (Property p : pc. getProperties()) {
             if (p.getBuildingId() == buildingID) {
                 Apartment s = (Apartment) p;
-                if (s.getAptNumber() == unitNumber && p.isAvailable()) {
+                if (s.getAptNumber() == unitNumber && s.isAvailable()) {
                     out = true;
                 }
             }
@@ -767,7 +775,7 @@ public class PropertyViewFX  implements Runnable {
         return out;
     }
 
-    //Override run method
+    //Override run method for threading
     public void run () {
         System.out.println("Property Thread started");
         iterateProperties();

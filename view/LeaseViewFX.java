@@ -47,6 +47,7 @@ public class LeaseViewFX {
         //Initialize labels, grid, HBox and Text Fields required for inputting lease information
         Label leaseLabel = new Label("Please input lease information: ");
 
+        //Set up grid and scene
         GridPane grid2 = new GridPane();
         grid2.setAlignment(Pos.CENTER_LEFT);
         grid2.setHgap(10);
@@ -56,6 +57,7 @@ public class LeaseViewFX {
         HBox leaseBox = new HBox(50);
         leaseBox.getChildren().addAll(leaseLabel);
 
+        //Display all labels and text fields for lease input
         Label leaseStartDateLabel = new Label("Lease start date (DD/MM/YYYY): ");
         TextField startDateTextField = new TextField();
 

@@ -21,9 +21,13 @@ public class TenantViewFX extends Tenant {
 
     Stage stage;
     Scene mainScene;
-    public TenantViewFX(Stage stage, Scene mainScene) {
+    Group base;
+    VBox adminBox;
+    public TenantViewFX(Stage stage, Scene mainScene, Group base, VBox adminBox) {
         this.stage = stage;
         this.mainScene = mainScene;
+        this.base = base;
+        this.adminBox = adminBox;
     }
 
     public void TenantInput(Group base, VBox adminBox) {
@@ -31,12 +35,10 @@ public class TenantViewFX extends Tenant {
         AtomicBoolean availabilityFlag = new AtomicBoolean(true);
         this.mainScene = mainScene;
 
-        boolean lock = false;
 
         Tenant tenant = new Tenant();
         Lease lease = new Lease();
-        LeaseView lv = new LeaseView();
-        PropertyView pv = new PropertyView();
+        PropertyViewFX pvfx = new PropertyViewFX(stage, base, adminBox);
         LeaseViewFX lvfx = new LeaseViewFX(stage, mainScene);
 
         stage.setTitle("Add a Tenant");
@@ -154,6 +156,7 @@ public class TenantViewFX extends Tenant {
 
             submitButton.setOnAction(event -> {
 
+                //Assign variables based on text field inpouts
                 firstName = firstNameTextField.getText();
                 lastName = lastNameTextField.getText();
                 email = emailTextField.getText();
@@ -162,18 +165,21 @@ public class TenantViewFX extends Tenant {
 
                 //Error handling checks to ensure building ID and apartment number exist and are available before storing information
 
-                if (!pv.checkID(buildingTenantID)) {
+                if (!pvfx.checkID(buildingTenantID)) {
                     showError("The inputted building ID does not match any building ID in the system. Please try again.");
                 }
 
-                  else if (pv.isCondo(buildingTenantID)) {
+                //Check if condo building
+                  else if (pvfx.isCondo(buildingTenantID)) {
 
-                        if ((pv.checkCondoNo(buildingTenantID, apartmentNum) == false)) {
+                      //Check if condo number exists
+                        if ((pvfx.checkCondoNo(buildingTenantID, apartmentNum) == false)) {
                             showError("The inputted unit number does not match any unit number for this condo building or is not available. Please try again.");
                         }
                         else {
 
-                            if (!pv.checkCondoAvailability(buildingTenantID, apartmentNum)) {
+                            //Check if condo is available
+                            if (!pvfx.checkCondoAvailability(buildingTenantID, apartmentNum)) {
                                 showError("This apartment unit number is currently occupied by another tenant");
                             }
 
@@ -183,7 +189,7 @@ public class TenantViewFX extends Tenant {
                                 tenant.setID();
                                 tenantID = tenant.getTenantID();
                                 System.out.println("This tenants ID is: " + tenant.getTenantID());
-                                pv.changeAvailableFlag(buildingTenantID, apartmentNum);
+                                pvfx.changeAvailableFlag(buildingTenantID, apartmentNum);
 
                                 //Add a new tenant to the array list by calling controller
                                 TenantController tc = new TenantController();
@@ -197,16 +203,16 @@ public class TenantViewFX extends Tenant {
                         }
                     }
 
-                  //If the unit is a condo
-                  else if (!pv.isCondo(buildingTenantID)) {
+                  //If the unit is an apartment
+                  else if (!pvfx.isCondo(buildingTenantID)) {
                     //Check if apartment number exists
-                    if (!pv.checkApartmentNo(buildingTenantID, apartmentNum)) {
+                    if (!pvfx.checkApartmentNo(buildingTenantID, apartmentNum)) {
                         showError("The inputted unit number does not match any unit number for this apartment building or is not available. Please try again.");
                     }
 
                     else {
                         //Check if unit is available
-                        if (!pv.checkApartmentAvailability(buildingTenantID, apartmentNum)) {
+                        if (!pvfx.checkApartmentAvailability(buildingTenantID, apartmentNum)) {
                             showError("This apartment unit number is currently occupied by another tenant");
                         }
 
@@ -216,7 +222,7 @@ public class TenantViewFX extends Tenant {
                             tenant.setID();
                             tenantID = tenant.getTenantID();
                             System.out.println("This tenants ID is: " + tenant.getTenantID());
-                            pv.changeAvailableFlag(buildingTenantID, apartmentNum);
+                            pvfx.changeAvailableFlag(buildingTenantID, apartmentNum);
 
                             //Add a new tenant to the array list by calling controller
                             TenantController tc = new TenantController();
@@ -245,7 +251,6 @@ public class TenantViewFX extends Tenant {
         });
 
         //For potential tenants
-
         prb2.setOnAction(e -> {
             GridPane grid2 = new GridPane();
             grid2.setAlignment(Pos.CENTER_LEFT);
@@ -311,6 +316,8 @@ public class TenantViewFX extends Tenant {
 
             submitButton.setOnAction(event -> {
 
+                //Assign variables based on text field input
+
                 firstName = firstNameTextField.getText();
                 lastName = lastNameTextField.getText();
                 email = emailTextField.getText();
@@ -319,13 +326,13 @@ public class TenantViewFX extends Tenant {
 
                 //Error handling to ensure building ID and apartment number exist and are available before storing information
 
-                if (!pv.checkID(buildingTenantID)) {
+                if (!pvfx.checkID(buildingTenantID)) {
                     showError("The inputted building ID does not match any building ID in the system. Please try again.");
                 }
 
-                 else if (pv.isCondo(buildingTenantID)) {
+                 else if (pvfx.isCondo(buildingTenantID)) {
 
-                    if ((pv.checkCondoNo(buildingTenantID, apartmentNum) == false)) {
+                    if ((pvfx.checkCondoNo(buildingTenantID, apartmentNum) == false)) {
                         showError("The inputted unit number does not match any unit number for this condo building or is not available. Please try again.");
                     }
 
@@ -336,10 +343,10 @@ public class TenantViewFX extends Tenant {
                             tenantID = tenant.getTenantID();
 
                             //Check if apartment or condo is available and print a message to the user
-                            if (pv.isCondo(buildingTenantID)) {
-                                availabilityFlag.set(pv.checkCondoAvailability(buildingTenantID, apartmentNum));
+                            if (pvfx.isCondo(buildingTenantID)) {
+                                availabilityFlag.set(pvfx.checkCondoAvailability(buildingTenantID, apartmentNum));
                             } else {
-                                availabilityFlag.set(pv.checkApartmentAvailability(buildingTenantID, apartmentNum));
+                                availabilityFlag.set(pvfx.checkApartmentAvailability(buildingTenantID, apartmentNum));
                             }
 
                             //Print out correct availability message
@@ -364,10 +371,10 @@ public class TenantViewFX extends Tenant {
                         }
                 }
 
-                //If the unit is a condo
-                else if (!pv.isCondo(buildingTenantID)) {
+                //If the unit is an apartment
+                else if (!pvfx.isCondo(buildingTenantID)) {
                     //Check if apartment number exists
-                    if (!pv.checkApartmentNo(buildingTenantID, apartmentNum)) {
+                    if (!pvfx.checkApartmentNo(buildingTenantID, apartmentNum)) {
                         showError("The inputted unit number does not match any unit number for this apartment building or is not available. Please try again.");
                     }
                         else {
@@ -377,10 +384,10 @@ public class TenantViewFX extends Tenant {
                             tenantID = tenant.getTenantID();
 
                             //Check if apartment or condo is available and print a message to the user
-                            if (pv.isCondo(buildingTenantID)) {
-                                availabilityFlag.set(pv.checkCondoAvailability(buildingTenantID, apartmentNum));
+                            if (pvfx.isCondo(buildingTenantID)) {
+                                availabilityFlag.set(pvfx.checkCondoAvailability(buildingTenantID, apartmentNum));
                             } else {
-                                availabilityFlag.set(pv.checkApartmentAvailability(buildingTenantID, apartmentNum));
+                                availabilityFlag.set(pvfx.checkApartmentAvailability(buildingTenantID, apartmentNum));
                             }
 
                             //Print out correct availability message

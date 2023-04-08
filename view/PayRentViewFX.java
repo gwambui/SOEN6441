@@ -92,6 +92,7 @@ public class PayRentViewFX {
 
         submitButton.setOnAction(e -> {
 
+            //Assign inputted ID to textfield input
             inputtedID.set(Integer.parseInt(usernameTextField.getText()));
 
             //Check if tenant ID exists before moving to next scene

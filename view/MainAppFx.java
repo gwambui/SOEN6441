@@ -114,7 +114,7 @@ public class MainAppFx extends Application {
         Scene scene = new Scene(base, 800, 800, Color.GHOSTWHITE);
         stage.setTitle("Main Menu");
 
-        TenantViewFX tvfx = new TenantViewFX(stage, scene);
+        TenantViewFX tvfx = new TenantViewFX(stage, scene, base, adminBox);
         LeaseViewFX lvfx = new LeaseViewFX(stage, scene);
         PayRentViewFX prvfx = new PayRentViewFX(stage, scene);
 
@@ -169,7 +169,7 @@ public class MainAppFx extends Application {
                         case "3":
                             base.getChildren().remove(adminBox);
 
-                            //Start thread for display properties
+                            //create thread for display properties
                                 Thread thread = new Thread(pvfx);
 
                                 //Make sure thread has not already started to ensure no error due to listener operation. Thread must be in NEW state
@@ -184,7 +184,6 @@ public class MainAppFx extends Application {
                                 thread.start();
 
                             //call join() to ensure propertyPane gets allocated before moving to next instruction
-
                             try {
                                 thread.join();
                             } catch (InterruptedException e) {
